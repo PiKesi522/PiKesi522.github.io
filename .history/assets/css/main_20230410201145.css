@@ -2623,14 +2623,14 @@ input, select, textarea {
 					/* margin: 0 0 0.75em 0; */
 				}
 
-					.box.post .info .date .year {
-						padding: 1em 0 0 0;
+					.box.post .info .date .year,{
+						
 						margin: 0.25em 0 0 0;
 					}
 
 					.box.post .info .date .day {
 						display: block;
-						margin: 0.25em 0 0.25em 0;
+						margin: 0.25em 0 0 0;
 						font-size: 1.5em;
 						font-weight: 700;
 						color: #1b252a;

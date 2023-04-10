@@ -2280,8 +2280,7 @@ input, select, textarea {
 		text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.5);
 		position: fixed;
 		width: 14em;
-		height: 100%;
-		padding: 2em 1.35em 1em 1.15em;
+		padding: 3em 1.35em 1em 1.15em;
 		background: #364050 url("images/bg01.png");
 		overflow-y: auto;
 		left: 0;
@@ -2344,7 +2343,7 @@ input, select, textarea {
 		background-color: #fff;
 		background-image: url("images/bg02.png");
 		width: 100%;
-		/* margin-left: 100vw; */
+		margin-left: 100vw;
 		-moz-flex-grow: 1;
 		-webkit-flex-grow: 1;
 		-ms-flex-grow: 1;
@@ -2513,9 +2512,9 @@ input, select, textarea {
 
 				#logo a {
 					display: block;
-					/* background-color: #c94663; */
+					background-color: #c94663;
 					background-image: url("images/bg01.png");
-					padding: 0.5em 0.25em;
+					padding: 0.875em 0.25em;
 					border-radius: 0.2em;
 					text-align: center;
 					box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.15), 0 0.025em 0.15em 0em rgba(0, 0, 0, 0.25);
@@ -2619,18 +2618,18 @@ input, select, textarea {
 					font-size: 1.5em;
 					color: #999;
 					border-bottom: solid 1px #ddd;
-					/* padding: 0 0 1em 0; */
-					/* margin: 0 0 0.75em 0; */
+					padding: 0 0 1em 0;
+					margin: 0 0 0.75em 0;
 				}
 
-					.box.post .info .date .year {
-						padding: 1em 0 0 0;
-						margin: 0.25em 0 0 0;
+					.box.post .info .date .year,
+					.box.post .info .date .month span {
+						display: none;
 					}
 
 					.box.post .info .date .day {
 						display: block;
-						margin: 0.25em 0 0.25em 0;
+						margin: 0.25em 0 0 0;
 						font-size: 1.5em;
 						font-weight: 700;
 						color: #1b252a;
@@ -2666,8 +2665,8 @@ input, select, textarea {
 		/* Content */
 
 			#content {
-				padding: 3em 0em 8em 5em;
-				margin: 0 5em 0 21em;
+				padding: 3em 5em 8em 5em;
+				margin-left: 7em;
 			}
 
 	}
@@ -2918,7 +2917,7 @@ input, select, textarea {
 
 			#content {
 				margin-top: 44px;
-				padding: 3em 0 2em 20px;
+				padding: 3em 20px 2em 20px;
 			}
 
 		/* Sidebar */
