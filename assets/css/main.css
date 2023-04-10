@@ -1679,7 +1679,7 @@ input, select, textarea {
 	form textarea {
 		display: block;
 		border-radius: 0.4em;
-		-webkit-appearance: none;
+		/* -webkit-appearance: none; */
 		border: solid 1px #ddd;
 		padding: 0.5em 0.75em;
 		width: 100%;
