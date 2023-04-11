@@ -18,7 +18,11 @@
 <body class="is-preload">
 
     <!-- Content -->
-    <div id="content"><div class="inner"> </div></div>
+    <div id="content">
+        <div class="inner">
+        </div>
+    </div>
+
 
     <!-- Sidebar -->
     <div id="sidebar">
@@ -42,12 +46,12 @@
     <script src="/assets/js/breakpoints.min.js"></script>
     <script src="/assets/js/util.js"></script>
     <script src="/assets/js/main.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script>function getMarkdownContent(title) {
         return new Promise(function (resolve, reject) {
           $.ajax({
-            url: title + ".md",
+            url: "./" + title + ".md",
             success: function (markdownContent) {
               resolve(markdownContent);
             },
@@ -61,11 +65,11 @@
       var mdList = [
         { name: "列表", title: "List", filename: "list" },
         { name: "队列", title: "Queue", filename: "queue" },
-        { name: "树", title: "Tree", filename: "tree" },
-        { name: "排序", title: "Sort", filename: "sort" }
+        { name: "树", title: "Tree", filename: "tree" }
       ];
       
       mdList.forEach((md) => {
+        md.filename = "markdown/" + md.filename;
       
         var articleElement = $("<article></article>").addClass("box post post-excerpt");
         var headerElement = $("<header></header>");
@@ -73,12 +77,10 @@
         var pElement = $("<p></p>").text(md.title);
         var infoElement = $("<div></div>").addClass("info");
         var dateElement = $("<span></span>").addClass("date");
-        var mainContentElement = $("<div></div>").attr("id", md.filename + "-content");
+        var mainContentElement = $("<div></div>").attr("id", md.name + "-content");
       
         var yearElement, dayElement, monthElement;
-
-        let path = "markdown/" + md.filename;
-        fetch(path + '.md')
+        fetch(md.filename + '.md')
           .then(response => {
             const lastModified = response.headers.get('Last-Modified');
             const date = new Date(lastModified).toDateString().split(" ");
@@ -96,7 +98,7 @@
         // $(".inner").append(articleElement);
         $("#content .inner").append(articleElement);
       
-        getMarkdownContent(path)
+        getMarkdownContent(md.filename)
           .then(markdownContent => {
             const converter = new showdown.Converter();
             const htmlContent = converter.makeHtml(markdownContent);
