@@ -59,7 +59,7 @@
 				<div style=" text-indent:2em; margin-top: 1em;">
 					<strong>你好！</strong>欢迎来到<strong>我的网站</strong>，
 					这是一个完全由本人维护和撰写的博客。不仅用于记录技术想法和学习笔记，
-					更多记录了对生活的感悟和反思。欢迎您的关注和支持！
+					更多记录了对生活的感悟和反思。欢迎您的关注和支持！ 
 					<br>
 				</div>
 			</article>
@@ -69,11 +69,9 @@
 	<!-- Sidebar -->
 	<div id="sidebar">
 		<script>
-			fetch('sidebar.html')
-				.then(response => response.text())
-				.then(data => {
-					document.getElementById('sidebar').innerHTML = data;
-				});
+		  fetch('sidebar.html')
+			.then(response => response.text())
+			.then(data => document.getElementById('myDiv').innerHTML = data);
 		</script>
 	</div>
 

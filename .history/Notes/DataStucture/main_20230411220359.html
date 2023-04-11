@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<!--
+	Striped by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+    <title>PiKesi's Home on the Internet</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+
+</head>
+
+<body class="is-preload">
+
+    <!-- Content -->
+    <div id="content">
+        <div class="inner">
+        </div>
+    </div>
+
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+
+
+        <!-- Logo -->
+        <h1 id="logo">
+            <a href="../index.html">
+                <img style="width: 100%;" src="../../assets/images/head1.png" alt="Logo">
+                <!-- <div style="margin: 0.5em 0 0 0;">
+					PiKesi
+				</div> -->
+            </a>
+        </h1>
+
+
+        <!-- Nav -->
+        <nav id="nav">
+            <ul>
+                <li><a href="../../life.html">Records & Thoughts</a></li>
+                <li class="current"><a href="../../note.html">Work & Study</a></li>
+                <li><a href="../../projects.html">Projects & Papers</a></li>
+                <li><a href="../../resume.html">Resume</a></li>
+                <!-- <li><a href="#">Contact Me</a></li> -->
+            </ul>
+        </nav>
+
+        <!-- Text -->
+        <section class="box text-style1">
+            <div class="inner">
+                <img style="width: 100%; margin: 0;" src="../../assets/images/icon1.jpg" alt="Logo">
+                <div style="text-align: center;">
+                    <strong> PIKESI </strong>
+                    <br />
+                    <strong> 爱 coding，更爱生活</strong>
+                </div>
+                <p>
+                    <hr>
+                    本站用于记录工作和学习笔记，也用于记录生活和感悟，欢迎交流！
+                    <br />
+                    QQ : 860083450
+                    <br />
+                    WX : PiKesi22
+                </p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <a style="float: left; flex: 1;"
+                        href="https://github.com/PiKesi522/PiKesi522.github.io/issues">提供建议</a>
+                    <!-- <span style="border-left: 10px black solid;" ></span> -->
+                    <a style="float: right;" href="https://github.com/PiKesi522/PiKesi522.github.io/issues">反馈问题</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/jquery.min.js"></script>
+    <script src="../../assets/js/browser.min.js"></script>
+    <script src="../../assets/js/breakpoints.min.js"></script>
+    <script src="../../assets/js/util.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        function getMarkdownContent(title) {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: "./" + title + ".md",
+                    success: function (markdownContent) {
+                        resolve(markdownContent);
+                    },
+                    error: function () {
+                        reject("Unable to get Markdown content.");
+                    }
+                });
+            });
+        }
+
+        var mdList = [
+            { name: "数据结构1", title: "Data Structure", filename:"main" },
+            { name: "数据结构2", title: "Algorithm", filename:"main"},
+            { name: "数据结构3", title: "Artificial Intelligence", filename:"main" }
+        ];
+
+        mdList.forEach(function (md) {
+            var articleElement = $("<article></article>").addClass("box post post-excerpt");
+            var headerElement = $("<header></header>");
+            var h2Element = $("<h2></h2>").text(md.name);
+            var pElement = $("<p></p>").text(md.title);
+            var infoElement = $("<div></div>").addClass("info");
+            var dateElement = $("<span></span>").addClass("date");
+            var monthElement = $("<span></span>").addClass("month").text("Apr");
+            var dayElement = $("<span></span>").addClass("day").text("14");
+            var yearElement = $("<span></span>").addClass("year").text("2023");
+            var mainContentElement = $("<div></div>").attr("id", md.name + "-content");
+
+            dateElement.append(monthElement).append(dayElement).append(yearElement);
+            infoElement.append(dateElement);
+            headerElement.append(h2Element).append(pElement);
+            articleElement.append(headerElement).append(infoElement).append(mainContentElement);
+
+            // $(".inner").append(articleElement);
+            $("#content .inner").append(articleElement);
+
+            getMarkdownContent(md.filename)
+            .then(function (markdownContent) {
+                var htmlContent = marked(markdownContent);
+                $("#" + md.filename + "-content").html(htmlContent);
+            }).catch(function (error) {
+                console.error(error);
+            });
+        });
+    </script>
+
+</body>
+
+</html>
