@@ -64,7 +64,7 @@
 				name: "猫与皮套人",
 				title: "Cats",
 				filename: "2022Birthday",
-				photo: "2019-上海 静安寺",
+				photo: "图源网络",
 				year: 2022,
 				month: "May",
 				day: 22,
@@ -97,7 +97,6 @@
 				name: "西方马克思与法兰克福学派",
 				title: "Western Maxism",
 				filename: "WesternMaxism",
-				photo: "2022-成都 武侯祠",
 				year: 2021,
 				month: "Jun",
 				day: 18,
@@ -108,7 +107,6 @@
 				name: "从超人审视个人英雄主义",
 				title: "Super Man or Super Hero",
 				filename: "Superman",
-				photo: "2019-重庆 洪崖洞",
 				year: 2020,
 				month: "Dec",
 				day: 24,
@@ -140,27 +138,13 @@
 				const monthElement = $("<span></span>").addClass("month").text(article.month);
 				const dayElement = $("<span></span>").addClass("day").text(article.day);
 				const featuredImageElement = $("<a></a>").attr("href", "/markdown/main.html?" + encodeURLParams(article)).addClass("image featured").append($("<img/>").attr("src", `markdown/${article.filename}/head.jpg`).attr("alt", ""));
-				const photoInfo = article.photo.split("-");
-				var photoElement;
-				if (article.photo === "图源网络") {
-					photoElement = $('<div></div>').css({
-						'text-align': 'center',
-						'margin': '0 0 1.5em 0'
-					}).html("图源网络");
-				}
-				else {
-					photoElement = $('<div></div>').css({
-						'text-align': 'center',
-						'margin': '0 0 1.5em 0'
-					}).html(photoInfo[0] + ' 于 <strong>' + photoInfo[1] + '</strong>');
-				}
 				const contentElement = $("<div></div>").css("text-indent", "2em").html(article.content);
 
 				dateElement.append(monthElement).append(dayElement).append(yearElement);
 				infoElement.append(dateElement);
 
 				headerElement.append(h2Element).append(pElement);
-				articleElement.append(headerElement).append(infoElement).append(featuredImageElement).append(photoElement).append(contentElement);
+				articleElement.append(headerElement).append(infoElement).append(featuredImageElement).append(contentElement);
 
 				resolve(articleElement);
 			});

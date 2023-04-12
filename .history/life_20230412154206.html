@@ -64,7 +64,7 @@
 				name: "猫与皮套人",
 				title: "Cats",
 				filename: "2022Birthday",
-				photo: "2019-上海 静安寺",
+				photo: "图源网络",
 				year: 2022,
 				month: "May",
 				day: 22,
@@ -141,26 +141,17 @@
 				const dayElement = $("<span></span>").addClass("day").text(article.day);
 				const featuredImageElement = $("<a></a>").attr("href", "/markdown/main.html?" + encodeURLParams(article)).addClass("image featured").append($("<img/>").attr("src", `markdown/${article.filename}/head.jpg`).attr("alt", ""));
 				const photoInfo = article.photo.split("-");
-				var photoElement;
-				if (article.photo === "图源网络") {
-					photoElement = $('<div></div>').css({
-						'text-align': 'center',
-						'margin': '0 0 1.5em 0'
-					}).html("图源网络");
-				}
-				else {
-					photoElement = $('<div></div>').css({
-						'text-align': 'center',
-						'margin': '0 0 1.5em 0'
-					}).html(photoInfo[0] + ' 于 <strong>' + photoInfo[1] + '</strong>');
-				}
+				const photoElement = $('<div></div>').css({
+					'text-align': 'center',
+					'margin': '0 0 1.5em 0'
+				}).html(photoInfo[0] + ' 于 <strong>复旦大学 光华楼</strong>');
 				const contentElement = $("<div></div>").css("text-indent", "2em").html(article.content);
 
 				dateElement.append(monthElement).append(dayElement).append(yearElement);
 				infoElement.append(dateElement);
 
 				headerElement.append(h2Element).append(pElement);
-				articleElement.append(headerElement).append(infoElement).append(featuredImageElement).append(photoElement).append(contentElement);
+				articleElement.append(headerElement).append(infoElement).append(featuredImageElement).append(contentElement);
 
 				resolve(articleElement);
 			});

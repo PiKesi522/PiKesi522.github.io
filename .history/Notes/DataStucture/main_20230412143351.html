@@ -12,16 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="/assets/css/main.css" />
   <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
-  <style>
-    article img {
-      display: block;
-      margin: auto;
-    }
 
-    article p {
-      text-indent: 2em;
-    }
-  </style>
 </head>
 
 <body class="is-preload">
@@ -40,7 +31,7 @@
           // 获取文本字符串中的每一行
           const lines = data.split('\n');
           // 修改第三行
-          lines[13] = "        <li class='current'><a href='/life.html'>Records & Thoughts</a></li>\n";
+          lines[15] = "        <li class='current'><a href='/projects.html'>Projects & Papers</a></li>\n";
           // 将修改后的文本字符串重新加载到myDiv元素中
           document.getElementById('sidebar').innerHTML = lines.join('');
         });
@@ -71,23 +62,25 @@
     }
 
     var mdList = [
-      { name: "落幕", title: "Say Goodbye", filename: "main" },
+      { name: "列表", title: "List", filename: "list" },
+      { name: "队列", title: "Queue", filename: "queue" },
+      { name: "树", title: "Tree", filename: "tree" },
+      { name: "排序", title: "Sort", filename: "sort" }
     ];
 
     mdList.forEach((md) => {
 
       var articleElement = $("<article></article>").addClass("box post post-excerpt");
       var headerElement = $("<header></header>");
-      var h2Element = $("<h2 style='text-align:center'></h2>").text(md.name);
-      var pElement = $("<p style='text-align:center'></p>").text(md.title);
+      var h2Element = $("<h2></h2>").text(md.name);
+      var pElement = $("<p></p>").text(md.title);
       var infoElement = $("<div></div>").addClass("info");
       var dateElement = $("<span></span>").addClass("date");
       var mainContentElement = $("<div></div>").attr("id", md.filename + "-content");
 
       var yearElement, dayElement, monthElement;
 
-      let path = md.filename;
-
+      let path = "markdown/" + md.filename;
       fetch(path + '.md')
         .then(response => {
           const lastModified = response.headers.get('Last-Modified');
