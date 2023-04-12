@@ -12,39 +12,41 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<script>
-		const folderUrl = "MainPage/";
-		const xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function () {
-			if (this.readyState === 4 && this.status === 200) {
-				const folderContent = xhr.responseText;
-				const jpgFileRegex = /<a href="\/MainPage\/([^"]+\.jpg)"[^>]*>/g;
-				const jpgFiles = [];
-				let match;
-				while (match = jpgFileRegex.exec(folderContent)) {
-					jpgFiles.push(match[1]);
-				}
-				// console.log(jpgFiles);
-				const randomIndex = Math.floor(Math.random() * jpgFiles.length);
-				const selectedJpgFile = jpgFiles[randomIndex];
-				const selectedJpgFilePath = folderUrl + decodeURIComponent(selectedJpgFile);
-				// console.log("Selected JPG file name: ", decodeURIComponent(selectedJpgFile));
-				// console.log("Selected JPG file path: ", selectedJpgFilePath);
+		function getAllPNGFileNames(url) {
+			return new Promise((resolve, reject) => {
+				const xhr = new XMLHttpRequest();
+				xhr.open("GET", url);
+				xhr.onload = () => {
+					if (xhr.status === 200) {
+						const fileNames = [];
+						const parser = new DOMParser();
+						const htmlDoc = parser.parseFromString(xhr.responseText, "text/html");
+						const links = htmlDoc.getElementsByTagName("a");
+						for (let i = 0; i < links.length; i++) {
+							const fileName = links[i].textContent;
+							if (fileName.endsWith(".png")) {
+								fileNames.push(fileName);
+							}
+						}
+						resolve(fileNames);
+					} else {
+						reject(new Error(`Failed to retrieve file list (${xhr.status}).`));
+					}
+				};
+				xhr.onerror = () => {
+					reject(new Error("Failed to retrieve file list."));
+				};
+				xhr.send();
+			});
+		}
 
-				// Update the image element and date/location elements with the selected values
-				const imgElement = document.querySelector(".random-display img");
-				imgElement.src = selectedJpgFilePath;
-				
-				const photoInfo = decodeURIComponent(selectedJpgFile).split("-");
-				const selectedYear = photoInfo[0]; // Replace with actual year
-				const selectedLocation = photoInfo[1] + " " + photoInfo[2].split(".")[0]; // Replace with actual location
-				const yearElement = document.querySelector(".random-display .year");
-				yearElement.textContent = selectedYear;
-				const locationElement = document.querySelector(".random-display .location");
-				locationElement.textContent = selectedLocation;
-			}
-		};
-		xhr.open("GET", folderUrl);
-		xhr.send();
+		getAllPNGFileNames("/MainPage/")
+			.then((fileNames) => {
+				console.log(fileNames); // 打印所有.png文件名
+			})
+			.catch((error) => {
+				console.error(error); // 打印错误信息
+			});
 	</script>
 </head>
 
@@ -57,19 +59,33 @@
 			<!-- 我的第一个博客 -->
 			<article class="box post post-excerpt">
 				<header>
+					<!--
+						Note: Titles and subtitles will wrap automatically when necessary, so don't worry
+						if they get too long. You can also remove the <p> entirely if you don't
+						need a subtitle.
+								-->
 					<h2>欢迎来到我的博客！！！</h2>
 					<p>WELCOME TO MY BLOG!!!</p>
 				</header>
-				<!-- <div class="info">
+				<div class="info">
+					<!--
+									Note: The date should be formatted exactly as it's shown below. In particular, the
+									"least significant" characters of the month should be encapsulated in a <span>
+									element to denote what gets dropped in 1200px mode (eg. the "uary" in "January").
+									Oh, and if you don't need a date for a particular page or post you can simply delete
+									the entire "date" element.
+
+								-->
 					<span class="date">
 						<span class="day">Top</span>
 					</span>
 
-				</div> -->
+				</div>
 				<div class="random-display">
-						<img width="1000px" height="550px" src="" alt="" />
-					<div style="text-align: center; margin: 0 0 1.5em 0;"><span class="year"></span> 于 <strong><span
-								class="location"></span></strong></div>
+					<a class="image featured">
+						<img width="1000px" height="500px" src="/MainPage/head.jpg" alt="" />
+					</a>
+					<div style="text-align: center; margin: 0 0 1.5em 0;">2021 于 <strong>上海 衡山路</strong></div>
 				</div>
 				<div style=" text-indent:2em">
 					<strong>Hello!</strong> Welcome to <strong> my website</strong>,

@@ -23,12 +23,12 @@
 				while (match = jpgFileRegex.exec(folderContent)) {
 					jpgFiles.push(match[1]);
 				}
-				// console.log(jpgFiles);
+				console.log(jpgFiles);
 				const randomIndex = Math.floor(Math.random() * jpgFiles.length);
 				const selectedJpgFile = jpgFiles[randomIndex];
 				const selectedJpgFilePath = folderUrl + decodeURIComponent(selectedJpgFile);
-				// console.log("Selected JPG file name: ", decodeURIComponent(selectedJpgFile));
-				// console.log("Selected JPG file path: ", selectedJpgFilePath);
+				console.log("Selected JPG file name: ", decodeURIComponent(selectedJpgFile));
+				console.log("Selected JPG file path: ", selectedJpgFilePath);
 
 				// Update the image element and date/location elements with the selected values
 				const imgElement = document.querySelector(".random-display img");
@@ -67,7 +67,7 @@
 
 				</div> -->
 				<div class="random-display">
-						<img width="1000px" height="550px" src="" alt="" />
+						<img width="1000px" height="500px" src="" alt="" />
 					<div style="text-align: center; margin: 0 0 1.5em 0;"><span class="year"></span> 于 <strong><span
 								class="location"></span></strong></div>
 				</div>
