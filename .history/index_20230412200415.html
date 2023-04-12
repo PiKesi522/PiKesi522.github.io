@@ -110,19 +110,19 @@
 	<script src="assets/js/main.js"></script>
 
 	<script>
-		// document.addEventListener('DOMContentLoaded', () => {
-		// 	const sidebar = localStorage.getItem('sidebar');
-		// 	if (sidebar) {
-		// 		document.getElementById('sidebar').innerHTML = sidebar;
-		// 	} else {
-		// 		fetch('/sidebar.html')
-		// 			.then(response => response.text())
-		// 			.then(data => {
-		// 				localStorage.setItem('sidebar', data);
-		// 				document.getElementById('sidebar').innerHTML = data;
-		// 			});
-		// 	}
-		// });
+		document.addEventListener('DOMContentLoaded', () => {
+			const sidebar = localStorage.getItem('sidebar');
+			if (sidebar) {
+				document.getElementById('sidebar').innerHTML = sidebar;
+			} else {
+				fetch('/sidebar.html')
+					.then(response => response.text())
+					.then(data => {
+						localStorage.setItem('sidebar', data);
+						document.getElementById('sidebar').innerHTML = data;
+					});
+			}
+		});
 	</script>
 
 </body>

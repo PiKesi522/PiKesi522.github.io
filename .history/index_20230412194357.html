@@ -10,9 +10,9 @@
 	<title>PiKesi's Home on the Internet</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<script>
-		const folderUrl = "MainPage/";
+	<link rel="stylesheet" href="assets/index/css/main.css" />
+	<!-- <script>
+		const folderUrl = "./MainPage/";
 		const xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) {
@@ -45,62 +45,46 @@
 		};
 		xhr.open("GET", folderUrl);
 		xhr.send();
-	</script>
+	</script> -->
 </head>
 
-<body class="is-preload">
+<body class="is-preload" style="overflow-y: hidden;">
+	<!-- Wrapper -->
+	<div id="wrapper">
 
-	<!-- Content -->
-	<div id="content">
-		<div class="inner">
-
-			<!-- 我的第一个博客 -->
-			<article class="box post post-excerpt">
-				<header>
-					<h2>欢迎来到我的博客！！！</h2>
-					<p>WELCOME TO MY BLOG!!!</p>
-				</header>
-				<!-- <div class="info">
-					<span class="date">
-						<span class="day">Top</span>
-					</span>
-
-				</div> -->
-				<div class="random-display">
-					<img width="1000px" height="550px" src="" alt="" />
-					<div style="text-align: center; margin: 0 0 1.5em 0;">
-						<span class="year"></span> 于 <strong><span class="location"></span></strong>
-					</div>
-				</div>
-				<div style=" text-indent:2em">
-					<strong>Hello!</strong> Welcome to <strong> my website</strong>,
-					a blog that is completely maintained and operated by myself.
-					It not only includes my technical thoughts and study notes,
-					but also records and reflections on life.
-					Your continued attention and support are welcome!
+		<!-- Header -->
+		<header id="header">
+			<div class="logo">
+				<span class="icon fa-gem"></span>
+			</div>
+			<div class="content">
+				<div class="inner">
+					<h1>PIKESI</h1>Hello! Welcome to my website, a blog that is completely maintained and operated by myself. 
 					<br>
+					It not only includes my technical thoughts and study notes, but also records and reflections on life. 
 				</div>
-				<div style=" text-indent:2em; margin-top: 1em;">
-					<strong>你好！</strong>欢迎来到<strong>我的网站</strong>，
-					这是一个完全由本人维护和撰写的博客。不仅用于记录技术想法和学习笔记，
-					更多记录了对生活的感悟和反思。欢迎您的关注和支持！
-					<br>
-				</div>
-			</article>
-		</div>
+			</div>
+			<nav>
+				<ul>
+					<li><a href="life.html">Intro</a></li>
+					<li><a href="note.html">Work</a></li>
+					<li><a href="projects.html">About</a></li>
+					<li><a href="resume.html">Contact</a></li>
+					<!--<li><a href="#elements">Elements</a></li>-->
+				</ul>
+			</nav>
+		</header>
+
+
+		<!-- Footer -->
+		<footer id="footer">
+			<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+		</footer>
+
 	</div>
 
-	<!-- Sidebar -->
-	<div id="sidebar">
-		<script>
-			fetch('/sidebar.html')
-				.then(response => response.text())
-				.then(data => {
-					document.getElementById('sidebar').innerHTML = data;
-				});
-		</script>
-	</div>
-
+	<!-- BG -->
+	<div id="bg"></div>
 
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
@@ -108,22 +92,6 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
-
-	<script>
-		// document.addEventListener('DOMContentLoaded', () => {
-		// 	const sidebar = localStorage.getItem('sidebar');
-		// 	if (sidebar) {
-		// 		document.getElementById('sidebar').innerHTML = sidebar;
-		// 	} else {
-		// 		fetch('/sidebar.html')
-		// 			.then(response => response.text())
-		// 			.then(data => {
-		// 				localStorage.setItem('sidebar', data);
-		// 				document.getElementById('sidebar').innerHTML = data;
-		// 			});
-		// 	}
-		// });
-	</script>
 
 </body>
 

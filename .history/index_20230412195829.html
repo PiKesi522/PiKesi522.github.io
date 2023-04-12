@@ -33,7 +33,7 @@
 				// Update the image element and date/location elements with the selected values
 				const imgElement = document.querySelector(".random-display img");
 				imgElement.src = selectedJpgFilePath;
-
+				
 				const photoInfo = decodeURIComponent(selectedJpgFile).split("-");
 				const selectedYear = photoInfo[0]; // Replace with actual year
 				const selectedLocation = photoInfo[1] + " " + photoInfo[2].split(".")[0]; // Replace with actual location
@@ -67,10 +67,9 @@
 
 				</div> -->
 				<div class="random-display">
-					<img width="1000px" height="550px" src="" alt="" />
+						<img width="1000px" height="550px" src="" alt="" />
 					<div style="text-align: center; margin: 0 0 1.5em 0;">
-						<span class="year"></span> 于 <strong><span class="location"></span></strong>
-					</div>
+						<span class="year"></span> 于 <strong><span class="location"></span></strong></div>
 				</div>
 				<div style=" text-indent:2em">
 					<strong>Hello!</strong> Welcome to <strong> my website</strong>,
@@ -89,17 +88,30 @@
 			</article>
 		</div>
 	</div>
-
-	<!-- Sidebar -->
-	<div id="sidebar">
-		<script>
+<!-- Sidebar -->
+<div id="sidebar">
+	<script>
+		// Get the stored state of the sidebar from localStorage
+		const sidebarState = localStorage.getItem('sidebarState');
+		
+		// If the sidebar state is 'loaded', skip loading the sidebar again
+		if (sidebarState === 'loaded') {
+			// Set the class of the sidebar to 'loaded' to show it
+			document.getElementById('sidebar').classList.add('loaded');
+		} else {
+			// Load the sidebar from the server and set the class of the sidebar to 'loaded'
 			fetch('/sidebar.html')
 				.then(response => response.text())
 				.then(data => {
 					document.getElementById('sidebar').innerHTML = data;
+					document.getElementById('sidebar').classList.add('loaded');
+					
+					// Store the loaded state of the sidebar in localStorage
+					localStorage.setItem('sidebarState', 'loaded');
 				});
-		</script>
-	</div>
+		}
+	</script>
+</div>
 
 
 	<!-- Scripts -->
@@ -108,22 +120,6 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
-
-	<script>
-		// document.addEventListener('DOMContentLoaded', () => {
-		// 	const sidebar = localStorage.getItem('sidebar');
-		// 	if (sidebar) {
-		// 		document.getElementById('sidebar').innerHTML = sidebar;
-		// 	} else {
-		// 		fetch('/sidebar.html')
-		// 			.then(response => response.text())
-		// 			.then(data => {
-		// 				localStorage.setItem('sidebar', data);
-		// 				document.getElementById('sidebar').innerHTML = data;
-		// 			});
-		// 	}
-		// });
-	</script>
 
 </body>
 

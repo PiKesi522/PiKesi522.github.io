@@ -101,6 +101,31 @@
 		</script>
 	</div>
 
+	<!-- Sidebar -->
+	<div id="sidebar">
+		<script>
+			// Get the stored state of the sidebar from localStorage
+			const sidebarState = localStorage.getItem('sidebarState');
+			console.log(sidebarState);
+			// If the sidebar state is 'loaded', skip loading the sidebar again
+			if (sidebarState === 'loaded') {
+				// Set the class of the sidebar to 'loaded' to show it
+				document.getElementById('sidebar').classList.add('loaded');
+			} else {
+				// Load the sidebar from the server and set the class of the sidebar to 'loaded'
+				fetch('/sidebar.html')
+					.then(response => response.text())
+					.then(data => {
+						document.getElementById('sidebar').innerHTML = data;
+						document.getElementById('sidebar').classList.add('loaded');
+
+						// Store the loaded state of the sidebar in localStorage
+						localStorage.setItem('sidebarState', 'loaded');
+					});
+			}
+		</script>
+	</div>
+
 
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
@@ -108,22 +133,6 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
-
-	<script>
-		// document.addEventListener('DOMContentLoaded', () => {
-		// 	const sidebar = localStorage.getItem('sidebar');
-		// 	if (sidebar) {
-		// 		document.getElementById('sidebar').innerHTML = sidebar;
-		// 	} else {
-		// 		fetch('/sidebar.html')
-		// 			.then(response => response.text())
-		// 			.then(data => {
-		// 				localStorage.setItem('sidebar', data);
-		// 				document.getElementById('sidebar').innerHTML = data;
-		// 			});
-		// 	}
-		// });
-	</script>
 
 </body>
 
