@@ -12,12 +12,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<script>
-		const folderUrl = "./public/MainPage/";
+		const folderUrl = ".public/MainPage/";
 		const xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) {
 				const folderContent = xhr.responseText;
-				const jpgFileRegex = /<a href="\/public\/MainPage\/([^"]+\.jpg)"[^>]*>/g;
+				const jpgFileRegex = /<a href="\/MainPage\/([^"]+\.jpg)"[^>]*>/g;
 				const jpgFiles = [];
 				let match;
 				while (match = jpgFileRegex.exec(folderContent)) {
