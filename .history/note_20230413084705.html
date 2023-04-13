@@ -52,7 +52,7 @@
 				name: "博客技术",
 				title: "Blog Tech.",
 				filename: "Blog",
-				photo: "2022-杭州 西湖",
+				photo: "图源网络",
 				year: 2023,
 				month: "Mar",
 				day: 3,
@@ -63,7 +63,7 @@
 				name: "数据结构",
 				title: "Data Structure",
 				filename: "DataStructure",
-				photo: "2022-华东师范大学 文史楼",
+				photo: "2019-上海 静安寺",
 				year: 2022,
 				month: "May",
 				day: 22,
@@ -107,24 +107,29 @@
 		const URLList = ['name', 'title', 'filename'];
 
 		function encodeURLParams(params) {
-			const encodedParams = `${encodeURIComponent("filename")}=${encodeURIComponent(params["filename"])}`;
-			return encodedParams; // 去除最后一个 '&'
+			let encodedParams = "";
+			for (let key in params) {
+				if (params.hasOwnProperty(key) && URLList.includes(key)) {
+					encodedParams += `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}&`;
+				}
+			}
+			return encodedParams.slice(0, -1); // 去除最后一个 '&'
 		}
 
 		function renderArticle(article) {
 			return new Promise((resolve, reject) => {
 				const articleElement = $("<article></article>").addClass("box post post-excerpt");
 				const headerElement = $("<header></header>");
-				// const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", `notes/${article.filename}/main.html?`).text(article.name));
-				const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", "/notes/main.html?" + encodeURLParams(article)).text(article.name));
+				const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", `Notes/${article.filename}/main.html?`).text(article.name));
+				// const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", "/Notes/main.html?" + encodeURLParams(article)).text(article.name));
 				const pElement = $("<p></p>").text(article.title);
 				const infoElement = $("<div></div>").addClass("info");
 				const dateElement = $("<span></span>").addClass("date");
 				const yearElement = $("<span></span>").addClass("year").text(article.year);
 				const monthElement = $("<span></span>").addClass("month").text(article.month);
 				const dayElement = $("<span></span>").addClass("day").text(article.day);
-				// const featuredImageElement = $("<a></a>").attr("href", `notes/${article.filename}/main.html?`).addClass("image featured").append($("<img/>").attr("src", `notes/${article.filename}/head.jpg`).attr("alt", ""));
-				const featuredImageElement = $("<a></a>").attr("href", "/notes/main.html?" + encodeURLParams(article)).addClass("image featured").append($("<img/>").attr("src", `notes/${article.filename}/head.jpg`).attr("alt", ""));
+				const featuredImageElement = $("<a></a>").attr("href", `Notes/${article.filename}/main.html?`).addClass("image featured").append($("<img/>").attr("src", `Notes/${article.filename}/head.jpg`).attr("alt", ""));
+				// const featuredImageElement = $("<a></a>").attr("href", "/Notes/main.html?" + encodeURLParams(article)).addClass("image featured").append($("<img/>").attr("src", `Notes/${article.filename}/head.jpg`).attr("alt", ""));
 				const photoInfo = article.photo.split("-");
 				var photoElement;
 				if (article.photo === "图源网络") {

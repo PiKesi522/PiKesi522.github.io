@@ -115,16 +115,16 @@
 			return new Promise((resolve, reject) => {
 				const articleElement = $("<article></article>").addClass("box post post-excerpt");
 				const headerElement = $("<header></header>");
-				// const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", `notes/${article.filename}/main.html?`).text(article.name));
-				const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", "/notes/main.html?" + encodeURLParams(article)).text(article.name));
+				const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", `notes/${article.filename}/main.html?`).text(article.name));
+				// const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", "/notes/main.html?" + encodeURLParams(article)).text(article.name));
 				const pElement = $("<p></p>").text(article.title);
 				const infoElement = $("<div></div>").addClass("info");
 				const dateElement = $("<span></span>").addClass("date");
 				const yearElement = $("<span></span>").addClass("year").text(article.year);
 				const monthElement = $("<span></span>").addClass("month").text(article.month);
 				const dayElement = $("<span></span>").addClass("day").text(article.day);
-				// const featuredImageElement = $("<a></a>").attr("href", `notes/${article.filename}/main.html?`).addClass("image featured").append($("<img/>").attr("src", `notes/${article.filename}/head.jpg`).attr("alt", ""));
-				const featuredImageElement = $("<a></a>").attr("href", "/notes/main.html?" + encodeURLParams(article)).addClass("image featured").append($("<img/>").attr("src", `notes/${article.filename}/head.jpg`).attr("alt", ""));
+				const featuredImageElement = $("<a></a>").attr("href", `notes/${article.filename}/main.html?`).addClass("image featured").append($("<img/>").attr("src", `notes/${article.filename}/head.jpg`).attr("alt", ""));
+				// const featuredImageElement = $("<a></a>").attr("href", "/notes/main.html?" + encodeURLParams(article)).addClass("image featured").append($("<img/>").attr("src", `notes/${article.filename}/head.jpg`).attr("alt", ""));
 				const photoInfo = article.photo.split("-");
 				var photoElement;
 				if (article.photo === "图源网络") {

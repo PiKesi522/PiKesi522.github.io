@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<!--
+	Striped by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>PiKesi's Home on the Internet</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script> -->
+  
+  <script src="/assets/js/showdown.min.js"></script>
+  <script>
+    const mdList = [
+      { name: "优化", title: "Optimize", filename: "optimize" },
+      { name: "Markdown样式", title: "Markdown Style", filename: "mdstyle" },
+    ];
+  </script>
+  <style>
+    article p:not(article > header > p) {
+      text-indent: 2em;
+    }
+  </style>
+</head>
+
+<body class="is-preload">
+
+  <!-- Content -->
+  <div id="content">
+    <div class="inner"> </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <script>
+      fetch('/sidebar.html')
+        .then(response => response.text())
+        .then(data => {
+          // 获取文本字符串中的每一行
+          const lines = data.split('\n');
+          // 修改第三行
+					lines[14] = "        <li class='current'><a href='/note.html'>Work & Study</a></li>\n";
+          // 将修改后的文本字符串重新加载到myDiv元素中
+          document.getElementById('sidebar').innerHTML = lines.join('');
+        });
+    </script>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/browser.min.js"></script>
+  <script src="/assets/js/breakpoints.min.js"></script>
+  <script src="/assets/js/util.js"></script>
+  <script src="/assets/js/main.js"></script>
+
+  <script>
+    function getMarkdownContent(title) {
+      return new Promise(function (resolve, reject) {
+        $.ajax({
+          url: title + ".md",
+          success: function (markdownContent) {
+            resolve(markdownContent);
+          },
+          error: function () {
+            reject("Unable to get Markdown content.");
+          }
+        });
+      });
+    }
+
+    mdList.forEach((md) => {
+
+      var articleElement = $("<article></article>").addClass("box post post-excerpt");
+      var headerElement = $("<header></header>");
+      var h2Element = $("<h2></h2>").text(md.name);
+      var pElement = $("<p></p>").text(md.title);
+      var infoElement = $("<div></div>").addClass("info");
+      var dateElement = $("<span></span>").addClass("date");
+      var mainContentElement = $("<div></div>").attr("id", md.filename + "-content");
+
+      var yearElement, dayElement, monthElement;
+
+      let path = "markdown/" + md.filename;
+      fetch(path + '.md')
+        .then(response => {
+          const lastModified = response.headers.get('Last-Modified');
+          const date = new Date(lastModified).toDateString().split(" ");
+          // console.log('Last modified date:', date);
+          yearElement = $("<span></span>").addClass("year").text(date[3]);
+          monthElement = $("<span></span>").addClass("month").text(date[1]);
+          dayElement = $("<span></span>").addClass("day").text(date[2]);
+          dateElement.append(monthElement).append(dayElement).append(yearElement);
+        });
+
+      infoElement.append(dateElement);
+      headerElement.append(h2Element).append(pElement);
+      articleElement.append(headerElement).append(infoElement).append(mainContentElement);
+
+      // $(".inner").append(articleElement);
+      $("#content .inner").append(articleElement);
+
+      getMarkdownContent(path)
+        .then(markdownContent => {
+          const converter = new showdown.Converter();
+          const htmlContent = converter.makeHtml(markdownContent);
+          // console.log(htmlContent);
+          $("#" + md.filename + "-content").html(htmlContent);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    });
+  </script>
+<!-- <script>hljs.highlightAll();</script> -->
+</body>
+
+</html>
