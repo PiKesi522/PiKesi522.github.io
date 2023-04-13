@@ -1,5 +1,4 @@
 <center><h2>
-    Web Storage API
 </center>
 
 
@@ -9,7 +8,7 @@
 
 ​		在此，我们采用LocalStorage的方法来缓存sidebar.html:
 
-<pre><code class="language-javascript">
+~~~js
 document.addEventListener('DOMContentLoaded', () => {
   const sidebar = localStorage.getItem('sidebar');
   if (sidebar) {
@@ -23,7 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 });
-</code></pre>
+~~~
+
 
 - 当页面在加载完成的时候，通过“localStorage.getItem”来查找是否保存了siderbar.html
 - 如果找到了，直接加载cache里的innerHTML
@@ -33,18 +33,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 在“开发者视图”中，我们可以看到结果：
 
-<img style="text-align: center;  width:100%;" src=".\img\image-20230412202325492.png" alt="image-20230412202325492" style="zoom: 25%;" />
+<img style="text-align: center" src="./img/image-20230412202325492.png" alt="image-20230412202325492" style="zoom: 25%;" />
 
 <div style="text-align: center; font-size:12px">
     使用了LocalStorage的网络流
 </div>
+<hr>
 
 
-<img style="text-align: center;  width:100%;" src=".\img\image-20230412202601358.png" alt="image-20230412202601358" style="zoom:25%;" />
+<img style="text-align: center" src="./img/image-20230412202601358.png" alt="image-20230412202601358" style="zoom:25%;" />
 
 <div style="text-align: center; font-size:12px">
     没使用LocalStorage的网络流
 </div>
+<hr>
 
 
 

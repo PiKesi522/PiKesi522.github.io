@@ -11,6 +11,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="./css/showImage.css" />
   <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
   <style>
     article img {
@@ -18,7 +19,7 @@
       margin: auto;
     }
 
-    article p:not(article > header > p)  {
+    article p:not(article > header > p) {
       text-indent: 2em;
     }
 
@@ -37,7 +38,7 @@
 
   <!-- Content -->
   <div id="content">
-    <div class="inner"> 
+    <div class="inner">
     </div>
   </div>
 
@@ -150,6 +151,27 @@
 
   </script>
 
+  <!-- 双击图片放大展示 -->
+  <script>
+    $("#content").on("click", "img", function () {
+      console.log("click");
+      var src = $(this).attr("src");
+      var img = $("<img>").attr("src", src).addClass("modal-image");
+      $("body").addClass("show-modal").css("overflow", "hidden").append(img);
+
+      img.css({
+        "position": "fixed",
+        "top": "50%",
+        "left": "50%",
+        "transform": "translate(-50%, -50%)"
+      });
+    });
+
+    $("body").on("click", ".modal-image", function () {
+      $(this).remove();
+      $("body").removeClass("show-modal").css("overflow", "auto");
+    });
+  </script>
 </body>
 
 </html>

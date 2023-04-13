@@ -11,16 +11,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="./css/showImage.css" />
   <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script> -->
+
 
   <script>
     const noteList = [
       {
         file: 'Blog',
         content: [
-          { name: "优化", title: "Optimize", filename: "optimize" },
-          { name: "Markdown样式", title: "Markdown Style", filename: "mdstyle" },
+          { name: "LocalStorage优化加载", title: "Web Storage API", filename: "optimize" },
+          { name: "美化Markdown代码块", title: "Markdown Codespace", filename: "mdstyle" },
+          { name: "图片展示", title: "Show Image", filename: "showImage" },
         ]
       },
       {
@@ -34,11 +37,21 @@
       },
     ];
   </script>
+
   <style>
+    #content .inner img {
+      box-shadow: 0 0 1em rgb(184, 187, 206);
+      border-radius: 1%;
+      width: 50%;
+      display: block;
+      margin: 0 auto;
+    }
+
     article p:not(article > header > p) {
       text-indent: 2em;
     }
   </style>
+
 </head>
 
 <body class="is-preload">
@@ -79,7 +92,7 @@
     const selectedFile = decodeURIComponent(urlParams.get("filename"));
     const selectedList = noteList.filter(md => md.file === selectedFile);
     const mdList = selectedList[0].content;
-    console.log(mdList);
+    // console.log(mdList);
 
     mdList.forEach((md) => {
       let path = selectedFile + "/markdown/" + md.filename;
@@ -94,7 +107,7 @@
 
       fetch(path + '.md')
         .then(response => {
-          console.log(response);
+          // console.log(response);
           if (!response.ok) {
             throw new Error("Unable to get Markdown content.");
           }
@@ -123,8 +136,44 @@
           console.error(error);
         });
     });
+
   </script>
-  
+
+  <!-- 双击图片放大展示 -->
+  <script>
+
+    $("#content").on("click", "img", function () {
+      var src = $(this).attr("src");
+      var img = $("<img>").attr("src", src).addClass("modal-image");
+      $("body").addClass("show-modal").css("overflow", "hidden").append(img);
+
+      img.css({
+        "position": "fixed",
+        "top": "50%",
+        "left": "50%",
+        "transform": "translate(-50%, -50%)",
+        "opacity": 0,
+        "transition": "opacity 0.3s ease-in-out"
+      });
+
+      // 将透明度设置为 1，触发过渡动画
+      setTimeout(function () {
+        img.css("opacity", 1);
+      }, 0);
+    });
+
+    $("body").on("click", ".modal-image", function () {
+      var img = $(this);
+      img.css("opacity", 0);
+      // 在过渡动画结束后再将图片移除
+      setTimeout(function () {
+        img.remove();
+        $("body").removeClass("show-modal").css("overflow", "auto");
+      }, 300);
+    });
+
+  </script>
+
 </body>
 
 </html>
