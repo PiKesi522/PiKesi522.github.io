@@ -35,3 +35,11 @@ body::after {
   max-height: 90%;
   z-index: 10000;
 }
+
+#content .inner img {
+  box-shadow: 0 0 1em rgb(184, 187, 206);
+  border-radius: 1%;
+  width: 50%;
+  display: block;
+  margin: 0 auto;
+}
