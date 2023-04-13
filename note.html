@@ -114,7 +114,7 @@
 				// const featuredImageElement = $("<a></a>").attr("href", `notes/${article.filename}/main.html?`).addClass("image featured").append($("<img/>").attr("src", `notes/${article.filename}/head.jpg`).attr("alt", ""));
 				const featuredImageElement = $("<a></a>").attr("href", "/notes/main.html?" + encodeURLParams(article)).addClass("image featured").append($("<img/>").attr("src", `notes/${article.filename}/head.jpg`).attr("alt", ""));
 				const photoInfo = article.photo.split("-");
-				var photoElement; 
+				var photoElement;  
 				if (article.photo === "图源网络") { 
 					photoElement = $('<div></div>').css({ 
 						'text-align': 'center', 
