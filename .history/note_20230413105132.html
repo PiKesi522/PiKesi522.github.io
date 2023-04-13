@@ -105,7 +105,7 @@
 					// "padding":"0px 4em 2em 4em",
 					// "border-radius":"5px"
 				});
-				const headerElement = $("<header></header>").css("padding","0");
+				const headerElement = $("<header></header>");
 				// const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", `notes/${article.filename}/main.html?`).text(article.name));
 				const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", "/notes/main.html?" + encodeURLParams(article)).text(article.name));
 				const pElement = $("<p></p>").text(article.title);
@@ -124,10 +124,10 @@
 				else {
 					photoElement = $('<div></div>').css({
 						'text-align': 'center',
-						'margin': '0 0 5em 0'
+						'margin': '0 0 1.5em 0'
 					}).html(photoInfo[0] + ' 于 <strong>' + photoInfo[1] + '</strong>');
 				}
-				const contentElement = $("<hr>").css({});
+				const contentElement = $("<hr>").css("margin", "0 0 20px 0");
 
 
 				headerElement.append(h2Element).append(pElement);

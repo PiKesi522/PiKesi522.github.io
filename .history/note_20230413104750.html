@@ -101,11 +101,11 @@
 		function renderArticle(article) {
 			return new Promise((resolve, reject) => {
 				const articleElement = $("<article></article>").addClass("box post post-excerpt").css({
-					// "box-shadow":"0px 0px 10px #ccc",
-					// "padding":"0px 4em 2em 4em",
-					// "border-radius":"5px"
+					"box-shadow":"0px 0px 20px #aaa",
+					"padding":"0px 2em 2em 2em",
+					"border-radius":"20px"
 				});
-				const headerElement = $("<header></header>").css("padding","0");
+				const headerElement = $("<header></header>");
 				// const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", `notes/${article.filename}/main.html?`).text(article.name));
 				const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", "/notes/main.html?" + encodeURLParams(article)).text(article.name));
 				const pElement = $("<p></p>").text(article.title);
@@ -124,10 +124,10 @@
 				else {
 					photoElement = $('<div></div>').css({
 						'text-align': 'center',
-						'margin': '0 0 5em 0'
+						'margin': '0 0 1.5em 0'
 					}).html(photoInfo[0] + ' 于 <strong>' + photoInfo[1] + '</strong>');
 				}
-				const contentElement = $("<hr>").css({});
+				const contentElement = $("<div></div>").css("border-top", "0px black solid");
 
 
 				headerElement.append(h2Element).append(pElement);
