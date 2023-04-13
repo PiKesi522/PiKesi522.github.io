@@ -13,32 +13,13 @@
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="stylesheet" href="./css/showImage.css" />
   <link rel="stylesheet" href="./css/prism.css" />
+  <link rel="stylesheet" href="./css/foldArticle.css" />
 
   <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script> -->
 
 
   <script>
-    const noteList = [
-      {
-        file: 'Blog',
-        content: [
-          { name: "LocalStorage优化加载", title: "Web Storage API", filename: "Web_Storage_API" },
-          { name: "Markdown懒加载", title: "Lazy Load", filename: "Lazy_Load" },
-          { name: "美化Markdown代码块", title: "Markdown Codespace", filename: "Markdown_Codespace" },
-          { name: "图片展示", title: "Show Image", filename: "Show_Image" },
-        ]
-      },
-      {
-        file: 'DataStructure',
-        content: [
-          { name: "列表", title: "List", filename: "list" },
-          { name: "队列", title: "Queue", filename: "queue" },
-          { name: "树", title: "Tree", filename: "tree" },
-          { name: "排序", title: "Sort", filename: "sort" }
-        ]
-      },
-    ];
   </script>
 
   <style>
@@ -93,22 +74,45 @@
   <script src="/assets/js/prism.js"></script>
 
   <script>
+
+    const noteList = [
+      {
+        file: 'Blog',
+        content: [
+          { name: "LocalStorage优化加载", title: "Web Storage API", filename: "Web_Storage_API" },
+          { name: "Markdown懒加载", title: "Lazy Load", filename: "Lazy_Load" },
+          { name: "美化Markdown代码块", title: "Markdown Codespace", filename: "Markdown_Codespace" },
+          { name: "图片展示", title: "Show Image", filename: "Show_Image" },
+        ]
+      },
+      {
+        file: 'DataStructure',
+        content: [
+          { name: "列表", title: "List", filename: "list" },
+          { name: "队列", title: "Queue", filename: "queue" },
+          { name: "树", title: "Tree", filename: "tree" },
+          { name: "排序", title: "Sort", filename: "sort" }
+        ]
+      },
+    ];
     const urlParams = new URLSearchParams(window.location.search);
 
     // Load the appropriate blog article based on the parameter values
     const selectedFile = decodeURIComponent(urlParams.get("filename"));
     const selectedList = noteList.filter(md => md.file === selectedFile);
     const mdList = selectedList[0].content;
-    
+
     let articleElements = []; // 保存所有已加载的文章节点
     let loadedCount = 0; // 记录已经加载的文章数量
 
     mdList.forEach((md, index) => {
       let path = selectedFile + "/markdown/" + md.filename;
       let articleElement = $("<article></article>").addClass("box post post-excerpt");
-      let headerElement = $("<header></header>");
+      let headerElement = $("<header></header>").css("transition", "all 0.3s ease-in-out");
       let h2Element = $("<h2></h2>").text(md.name);
       let pElement = $("<p></p>").text(md.title);
+      let openTipElement = $("<span></span>").addClass("open-tip").text("展开文章");
+
       let infoElement = $("<div></div>").addClass("info");
       let dateElement = $("<span></span>").addClass("date");
       let mainContentElement = $("<div></div>").attr("id", md.filename + "-content");
@@ -119,8 +123,31 @@
 
       articleElements[index] = { // 保存已加载的文章节点及其修改时间
         article: articleElement,
+        headerElement: headerElement,
+        mainContentElement: mainContentElement,
         modifiedTime: null
       };
+
+      headerElement.append(h2Element).append(pElement).append(openTipElement);
+
+      // 监听鼠标移入事件，显示提示信息和箭头动画
+      headerElement.mouseenter(() => {
+        openTipElement.css("opacity", "1");
+      });
+
+      headerElement.hover(
+        function () {
+          $(this).css("transform", "translateY(-5px)");
+        },
+        function () {
+          $(this).css("transform", "translateY(0)");
+        }
+      );
+
+      // 监听鼠标移出事件，隐藏提示信息和箭头动画
+      headerElement.mouseleave(() => {
+        openTipElement.css("opacity", "0");
+      });
 
       $("#content .inner").append(articleElement);
 
@@ -138,7 +165,6 @@
 
           dateElement.append(monthElement).append(dayElement).append(yearElement);
           infoElement.append(dateElement);
-          headerElement.append(h2Element).append(pElement);
 
           // 保存文章的修改时间
           articleElements[index].modifiedTime = new Date(lastModified);
@@ -156,7 +182,38 @@
           loadedCount++;
           if (loadedCount === mdList.length) {
             articleElements.sort((a, b) => b.modifiedTime - a.modifiedTime); // 根据修改时间排序
-            articleElements.forEach(article => $("#content .inner").append(article.article)); // 重新插入DOM中
+
+            articleElements.forEach((article, index) => {
+              $("#content .inner").append(article.article)
+              // 点击文章标题
+              article.headerElement.click(() => {
+                if (currentOpen !== null) {
+                  currentOpen.mainContentElement.slideUp("fast"); // 折叠当前展开的文章
+                  currentOpen.headerElement.removeClass("active");
+                  currentOpen.headerElement.find(".open-tip").text("展开文章"); // 修改已展开文章的提示信息
+                }
+                if (currentOpen === article) { // 点击已经展开的文章
+                  currentOpen = null;
+                } else { // 点击未展开的文章
+                  article.mainContentElement.slideDown("fast"); // 展开当前点击的文章
+                  article.headerElement.addClass("active");
+                  articleElements[index].headerElement.find(".open-tip").text("收起文章"); // 修改已展开文章的提示信息
+                  currentOpen = article;
+                }
+              });
+
+              // 添加到DOM中的默认状态只显示文章标题，点击后才会展开
+              let headerElement = article.headerElement;
+              let mainContentElement = article.mainContentElement;
+              headerElement.addClass("clickable");
+              mainContentElement.hide();
+
+              if (index === 0) { // 第一个文章默认展开
+                currentOpen = article;
+                headerElement.addClass("active");
+                mainContentElement.show();
+              }
+            });
           }
         })
         .catch(error => {

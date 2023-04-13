@@ -1,0 +1,13 @@
+.open-tip {
+    position: absolute;
+    top: 35%;
+    right: 0;
+    margin: 0.5em;
+    padding: 0.25em 3em;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 0.25em;
+    font-size: 1em;
+    color: #8e8e8e;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
