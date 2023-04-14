@@ -213,6 +213,7 @@
               if (index === 0) { // 第一个文章默认展开
                 currentOpen = article;
                 headerElement.addClass("active");
+                headerElement.find(".open-tip").text("收起文章"); // 修改已展开文章的提示信息
                 mainContentElement.show();
               }
             });
