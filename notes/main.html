@@ -174,7 +174,8 @@
         .then(markdownContent => {
           const converter = new showdown.Converter();
           const htmlContent = converter.makeHtml(markdownContent);
-          $("#" + md.filename + "-content").html(htmlContent);
+          const processedHtmlContent = htmlContent.replace(/<img/g, '<img loading="lazy"');
+          $("#" + md.filename + "-content").html(processedHtmlContent);
 
           Prism.highlightAll();// 对代码块进行语法高亮
 
