@@ -3017,3 +3017,15 @@ input, select, textarea {
 			}
 
 	}
+
+	body::-webkit-scrollbar {
+		width: 0.5em; /* 修改滚动条宽度 */
+	  }
+	  
+	  body::-webkit-scrollbar-track {
+		background-color: #e8e8e8; /* 滚动条背景色 */
+	  }
+	  
+	  body::-webkit-scrollbar-thumb {
+		background-color: #ababab; /* 滚动条滑块颜色 */
+	  }

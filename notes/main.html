@@ -20,6 +20,27 @@
 
 
   <script>
+
+    const noteList = [
+      {
+        file: 'Blog',
+        content: [
+          { name: "LocalStorage优化加载", title: "Web Storage API", filename: "Web_Storage_API" },
+          { name: "文章及图片懒加载", title: "Lazy Load", filename: "Lazy_Load" },
+          { name: "美化Markdown代码块", title: "Markdown Codespace", filename: "Markdown_Codespace" },
+          { name: "图片展示", title: "Show Image", filename: "Show_Image" },
+        ]
+      },
+      {
+        file: 'DataStructure',
+        content: [
+          { name: "列表", title: "List", filename: "list" },
+          { name: "队列", title: "Queue", filename: "queue" },
+          { name: "树", title: "Tree", filename: "tree" },
+          { name: "排序", title: "Sort", filename: "sort" }
+        ]
+      },
+    ];
   </script>
 
   <style>
@@ -75,26 +96,6 @@
 
   <script>
 
-    const noteList = [
-      {
-        file: 'Blog',
-        content: [
-          { name: "LocalStorage优化加载", title: "Web Storage API", filename: "Web_Storage_API" },
-          { name: "Markdown懒加载", title: "Lazy Load", filename: "Lazy_Load" },
-          { name: "美化Markdown代码块", title: "Markdown Codespace", filename: "Markdown_Codespace" },
-          { name: "图片展示", title: "Show Image", filename: "Show_Image" },
-        ]
-      },
-      {
-        file: 'DataStructure',
-        content: [
-          { name: "列表", title: "List", filename: "list" },
-          { name: "队列", title: "Queue", filename: "queue" },
-          { name: "树", title: "Tree", filename: "tree" },
-          { name: "排序", title: "Sort", filename: "sort" }
-        ]
-      },
-    ];
     const urlParams = new URLSearchParams(window.location.search);
 
     // Load the appropriate blog article based on the parameter values
