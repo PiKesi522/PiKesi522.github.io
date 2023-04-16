@@ -67,8 +67,6 @@ const judge = (a, b, c, d) => {
 }
 
 void (async function () {
-    // Write your code here
-
     let line = await readline();
     let tokens = line.split(" ");
     let n = parseInt(tokens[0]);
@@ -168,7 +166,6 @@ var iter = rl[Symbol.asyncIterator]();
 const readline = async () => (await iter.next()).value;
 
 void async function () {
-    // Write your code here
     const t = parseInt(await readline());
     for(let i = 0; i < t; i++){
         let n = parseInt(await readline());
@@ -261,7 +258,6 @@ void async function () {
 </div>
 
 ~~~js
-// 本题为考试多行输入输出规范示例，无需提交，不计分。
 const rl = require("readline").createInterface({ input: process.stdin });
 var iter = rl[Symbol.asyncIterator]();
 const readline = async () => (await iter.next()).value;
@@ -279,7 +275,6 @@ const getValue = (loc, size, array) => {
 const getSize = (s) => {
     let result = 0;
     while(s != 0){
-//         console.log(s);
         s = parseInt(s / 2);
         result ++;
     }
@@ -294,9 +289,6 @@ const check = (l, r, seq) => {
     let size;
     for(size = minSize; size <= seq.length; size++){
 //         console.log("size:" + size);
-//         if(size > seq.length){
-//             break;
-//         }
         for(let i = 0; i <= (seq.length - size); i++){
             let value = getValue(i, size, seq);
             if(l <= value && value <= r){
@@ -360,24 +352,16 @@ void (async function () {
     }
     const seq = [];
     while(start != end){
-//         console.log(start);
         seq.push(value[start - 1]);
         used[start] = 1;
         for(let i = 1; i <= n; i++){
             if(connect_array[start][i] == 1 && used[i] == 0){
-//                 console.log(i);
                 start = i;
             }
         }
     }
-    
-//     console.log(seq);
     ans += check(l, r, seq);
-    const r_seq = seq.reverse();
-//     console.log(r_seq);
-    ans += check(l ,r, r_seq);
-//     console.log(apper_array);
-//     console.log(connect_array);
+    ans += check(l ,r, seq.reverse());
     console.log(ans);
 })();
 
