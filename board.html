@@ -7,20 +7,183 @@
 <html>
 
 <head>
-    <title>PiKesi's Home on the Internet</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+	<title>PiKesi's Home on the Internet</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="/board/css/board.css" />
+	<link rel="stylesheet" href="/board/css/popup.css" />
 	<link rel="icon" href="/assets/images/head1.png">
+	<style>
+	</style>
 </head>
 
 <body class="is-preload">
 
-    <!-- Content -->
-    <div id="content">
-        <div class="inner">
-        </div>
-    </div>
+	<script src="/board/token.js"></script>
+	<script src="/board/getIssue.js"></script>
+	<script src="/board/pushIssue.js"></script>
+
+	<!-- 添加全屏半透明背景 -->
+	<div class="overlay"></div>
+
+	<div class="popup">
+		<div class="head">
+			<svg t="1681748112100" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+				p-id="2640" width="50" height="50">
+				<path
+					d="M511.998465 65.290005c-246.722194 0-446.708971 200.001103-446.708971 446.708971 0 246.708891 199.986777 446.709995 446.708971 446.709995 246.708891 0 446.711018-200.001103 446.711018-446.709995C958.709483 265.291109 758.707356 65.290005 511.998465 65.290005L511.998465 65.290005zM756.308727 405.884171 465.103412 697.081299c-6.804986 6.819313-17.856693 6.819313-24.662703 0L267.69025 524.33084c-6.804986-6.804986-6.804986-17.856693 0-24.668843l54.29765-54.290487c6.804986-6.812149 17.856693-6.812149 24.662703 0l106.122993 106.107643 224.574778-224.561475c6.804986-6.812149 17.857716-6.812149 24.663726 0l54.29765 54.290487C763.128039 388.020314 763.128039 399.072021 756.308727 405.884171L756.308727 405.884171 756.308727 405.884171zM756.308727 405.884171"
+					fill="#89C27E" p-id="2641"></path>
+			</svg>
+			<h2>提交成功！</h2>
+		</div>
+
+		<p style="color: rgb(34, 19, 19); font-weight: 600;">由衷感谢您对本网站的支持！</p>
+		<hr>
+		<p>您的留言将在审查被回复后展示在留言板中！</p>
+		<!-- <button onclick="closePopup()">Close</button> -->
+	</div>
+
+	<!-- Content -->
+	<div id="content">
+		<div class="inner">
+			<div class="title">
+				<img src="/board/Board_copper.png" alt="Message Board">
+
+				<hr style="margin: 0;">
+				<header>
+					<h2>匿名留言板</h2>
+				</header>
+			</div>
+			<div class="submit">
+				<button onclick="trySubmit()">
+					<img src="/board/button.png" style="width: 100%;" alt="button">
+				</button>
+			</div>
+			<div class="issues">
+				<!-- <article class="box post post-excerpt">
+					<header>
+						<h3>ISSUE TITLE<span>最新回复于 2023-4-15</span></h3>
+					</header>
+					<hr>
+					<div class="ask">
+						<img src="/board/S.png" style="width: 30px;" alt="">
+						<span style="padding: 0 0.3em; color: #AAA;"> ：</span>
+						ASK ME SOMETHING
+					</div>
+					<hr>
+					<div class="answer">
+						<img src="/board/P.png" style="width: 30px;" alt="">
+						<span style="padding: 0 0.3em; color: #AAA;"> ：</span>
+						ASK ME SOMETHING
+					</div>
+				</article> -->
+			</div>
+		</div>
+	</div>
+
+	<!-- 提交至留言板 -->
+	<script>
+		function openPopup() {
+			const popup = document.querySelector('.popup');
+			const overlay = document.querySelector('.overlay');
+			popup.classList.add('visible');
+			overlay.classList.add('visible'); /* 添加 visible 类 */
+			setTimeout(function () {
+				closePopup();
+			}, 2000);
+		}
+
+		function closePopup() {
+			const popup = document.querySelector('.popup');
+			const overlay = document.querySelector('.overlay');
+			popup.classList.remove('visible');
+			overlay.classList.remove('visible'); /* 移除 visible 类 */
+		}
+
+		function trySubmit() {
+			openPopup();
+			console.log("click");
+			// pushIssue("Delete Later", "Delete Later");	
+		}
+	</script>
+
+	<!-- 读取留言板的内容 -->
+	<script>
+		function addIssueArticle(conversation) {
+			// 创建 article 元素
+			const article = document.createElement('article');
+			article.classList.add('box', 'post', 'post-excerpt');
+
+			// 创建 header 元素
+			const header = document.createElement('header');
+			const date = document.createElement('span');
+			date.textContent = `最新回复于 ${conversation.replyDate}`; // 替换为最新回复日期
+			const title = document.createElement('h3');
+			title.textContent = conversation.title; // 替换为 issue 标题
+			title.appendChild(date)
+			header.appendChild(title);
+			// header.appendChild(date);
+			article.appendChild(header);
+
+			const hr1 = document.createElement('hr');
+			article.appendChild(hr1);
+
+			// 创建 ask 元素
+			const ask = document.createElement('div');
+			ask.classList.add('ask');
+			const askImage = document.createElement('img');
+			askImage.src = '/board/S.png'; // 替换为提问者的图像
+			askImage.style.width = '30px';
+			ask.appendChild(askImage);
+			const askText = document.createElement('span');
+			askText.style.padding = '0 0.3em';
+			askText.style.color = '#AAA';
+			askText.textContent = '：';
+			ask.appendChild(askText);
+			const askContent = document.createElement('span');
+			askContent.textContent = conversation.question; // 替换为问题内容
+			ask.appendChild(askContent);
+			article.appendChild(ask);
+
+			const hr2 = document.createElement('hr');
+			article.appendChild(hr2);
+
+			// 创建 answer 元素
+			const answer = document.createElement('div');
+			answer.classList.add('answer');
+			const answerImage = document.createElement('img');
+			answerImage.src = '/board/P.png'; // 替换为回答者的图像
+			answerImage.style.width = '30px';
+			answer.appendChild(answerImage);
+			const answerText = document.createElement('span');
+			answerText.style.padding = '0 0.3em';
+			answerText.style.color = '#AAA';
+			answerText.textContent = '：';
+			answer.appendChild(answerText);
+			const answerContent = document.createElement('span');
+			answerContent.textContent = conversation.reply; // 替换为回答内容
+			answer.appendChild(answerContent);
+			article.appendChild(answer);
+
+			// 获取 #content .inner .issues 元素
+			const issues = document.querySelector('#content .inner .issues');
+
+			// 将 article 元素插入 #content .inner .issues 元素中
+			issues.appendChild(article);
+		}
+
+
+		fetchAllIssueComments()
+			.then(updatedConversations => {
+				// addIssueArticle(updatedConversations);
+				updatedConversations.forEach(conversation => {
+					addIssueArticle(conversation);
+				});
+				console.log(updatedConversations); // 打印更新后的 conversations
+			})
+			.catch(error => console.error(error));
+	</script>
 
 	<!-- Sidebar -->
 	<div id="sidebar">
@@ -31,19 +194,19 @@
 					// 获取文本字符串中的每一行
 					const lines = data.split('\n');
 					// 修改第三行
-					lines[17] = "        <li class='current'><a href='/board.html'>BBS</a></li>\n";
+					lines[17] = "        <li class='current'><a href='/board.html'>BBS(测试版)</a></li>\n";
 					// 将修改后的文本字符串重新加载到myDiv元素中
 					document.getElementById('sidebar').innerHTML = lines.join('');
 				});
 		</script>
 	</div>
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
 
 </body>
 

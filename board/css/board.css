@@ -1,0 +1,84 @@
+
+.title {
+    text-align: center;
+    padding: 0 0 3em 0;
+}
+
+.title img {
+    width: 40%;
+}
+
+.title h2{
+    font-size: 48px;
+    line-height: 48px;
+    background: linear-gradient(90deg, #8B4513 0%, #d8af48 50%, #8B4513 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#content .inner .submit {
+    /* margin: auto auto; */
+    text-align: center;
+}
+
+
+#content .inner .submit button {
+    background-color: #FFFFFF;
+    width: 200px;
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    padding: 0 !important;
+    margin: 0 0 1em 0 !important;
+}
+
+header h3 {
+    line-height: 1em;
+}
+
+header p {
+    text-indent: 0.5em;
+    padding: 0.1em !important;
+    font-size: 24px !important;
+}
+
+article {
+    background-color: rgb(246, 241, 233);
+    border-radius: 1%;
+    box-shadow: 0px 0px 20px #BBB;
+    padding: 2em;
+    /* margin: 0; */
+}
+
+article .ask,
+article .answer {
+    display: flex;
+    color: #000;
+    margin: 0 0 0 1em;
+    font-weight: 800;
+    /* line-height: 2em; */
+    align-items:start;
+    font-size: 1.5em;
+}
+
+article .answer {
+    color: #333;
+}
+
+article img {
+    border-radius: 3px;
+    box-shadow: 0px 0px 10px #333;
+}
+
+article h3 {
+    font-size: 3em;
+}
+
+article h3 span{
+    float: right;
+    font-weight: 400;
+    font-size: 24px;
+    color: #AAA;
+}
