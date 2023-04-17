@@ -1,11 +1,13 @@
+const pushHeader = {
+    Authorization: `Bearer ${token.split('@')[1]}`,
+    'Content-Type': 'application/json'
+}
+
 function pushIssue(title, body) {
 
     fetch(`https://api.github.com/repos/${repo}/issues`, {
         method: 'POST',
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        },
+        headers: pushHeader,
         body: JSON.stringify({ title, body })
     })
         .then(response => response.json())

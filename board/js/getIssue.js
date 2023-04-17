@@ -1,6 +1,6 @@
 const url = `https://api.github.com/repos/${repo}/issues?state=closed`;
 const headers = {
-    'Authorization': `token ${token}`
+    'Authorization': `token ${token.split('@')[1]}`
 };
 
 function fetchAllIssue() {
