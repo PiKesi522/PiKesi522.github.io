@@ -11,7 +11,7 @@
     font-size: 48px;
     line-height: 48px;
     background: linear-gradient(135deg, #732513 0%, #e0e05a 33%, #732513 100%);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
