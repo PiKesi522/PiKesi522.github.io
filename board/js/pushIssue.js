@@ -13,6 +13,9 @@ function pushIssue(title, body) {
         })
             .then(response => response.json())
             .then(data => {
+                if (data.message === "Bad credentials") {
+                    reject("lost connection");
+                }
                 // console.log(data);
                 resolve(data);
             })
