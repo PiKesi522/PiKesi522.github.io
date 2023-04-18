@@ -1,5 +1,5 @@
 const pushHeader = {
-    Authorization: `Bearer ${token.split('@')[1]}`,
+    Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json'
 }
 

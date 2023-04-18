@@ -35,7 +35,8 @@ header {
 }
 
 header h3 {
-    line-height: 1em;
+    line-height: 36px;
+    font-size: 36px !important;
 }
 
 header p {

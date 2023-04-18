@@ -15,6 +15,50 @@
 	<link rel="stylesheet" href="/board/css/popup.css" />
 	<link rel="icon" href="/assets/images/head1.png">
 	<style>
+		.board-popup {
+			position: fixed;
+			top: 45%;
+			left: 55%;
+			transform: translate(-50%, -50%);
+			width: 400px;
+			padding: 20px;
+			background-color: #fff;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+			border-radius: 2%;
+			z-index: 9999;
+			opacity: 0;
+			/* 初始状态为透明 */
+			pointer-events: none;
+			/* 初始状态下不响应鼠标事件 */
+			transition: opacity 0.3s ease-in-out;
+			/* 添加过渡效果 */
+		}
+
+		.board-popup div {
+			padding: 0 1em;
+		}
+
+		.board-popup .close-button {
+			margin: 2em 2em 0 0;
+			float: right;
+		}
+
+		.board-popup .submit-button {
+			margin: 2em 0 0 2em;
+			float: left;
+		}
+
+		.overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 9998;
+			display: none;
+			/* 默认不显示 */
+		}
 	</style>
 </head>
 
@@ -23,9 +67,6 @@
 	<script src="/board/js/token.js"></script>
 	<script src="/board/js/getIssue.js"></script>
 	<script src="/board/js/pushIssue.js"></script>
-
-	<!-- 添加全屏半透明背景 -->
-	<div class="overlay"></div>
 
 	<div class="popup">
 		<div class="head">
@@ -44,6 +85,47 @@
 		<!-- <button onclick="closePopup()">Close</button> -->
 	</div>
 
+
+	<div class="board-popup">
+		<form id="message-form">
+			<div class="title">
+				<label style="display: inline-block; width: 25%;" for="name">您的称呼：</label>
+				<input style="display: inline-block; width: 74%;" type="text" id="name" name="name" value="匿名用户"
+					required>
+			</div>
+			<div class="message">
+				<label for="message">留言：</label>
+				<textarea id="message" name="message" required></textarea>
+			</div>
+			<button class="submit-button" type="submit">提交留言</button>
+			<button class="close-button" onclick="closeBoardPopup()">关闭</button>
+		</form>
+	</div>
+
+	<script>
+		const form = document.querySelector('#message-form');
+
+		form.addEventListener('submit', (event) => {
+			// 阻止表单默认提交事件
+			event.preventDefault();
+
+			// 获取必填字段
+			const name = document.querySelector('#name').value.trim();
+			const message = document.querySelector('#message').value.trim();
+
+			// 检查必填字段是否已经填写
+			if (!name || !message) {
+				alert('请填写必填字段！');
+				return false;
+			}
+
+			// 必填字段已经填写，调用trysubmit函数
+			trySubmit(name, message);
+		});
+	</script>
+
+	<div class="overlay"></div>
+
 	<!-- Content -->
 	<div id="content">
 		<div class="inner">
@@ -56,10 +138,13 @@
 				</header>
 			</div>
 			<div class="submit">
-				<button onclick="trySubmit()">
+				<button onclick="OpenText()">
 					<img src="/board/button.png" style="width: 100%;" alt="button">
 				</button>
 			</div>
+
+
+
 			<div class="issues">
 				<!-- <article class="box post post-excerpt">
 					<header>
@@ -86,9 +171,7 @@
 	<script>
 		function openPopup() {
 			const popup = document.querySelector('.popup');
-			const overlay = document.querySelector('.overlay');
 			popup.classList.add('visible');
-			overlay.classList.add('visible'); /* 添加 visible 类 */
 			setTimeout(function () {
 				closePopup();
 			}, 2000);
@@ -96,15 +179,38 @@
 
 		function closePopup() {
 			const popup = document.querySelector('.popup');
-			const overlay = document.querySelector('.overlay');
 			popup.classList.remove('visible');
-			overlay.classList.remove('visible'); /* 移除 visible 类 */
 		}
 
-		function trySubmit() {
+		function openBoardPopup() {
+			const popup = document.querySelector('.board-popup');
+			const overlay = document.querySelector('.overlay');
+			popup.style.opacity = '1';
+			popup.style.pointerEvents = 'auto';
+			setTimeout(() => {
+				popup.style.display = 'block';
+			}, 10);
+			overlay.style.display = 'block';
+		}
+
+		function closeBoardPopup() {
+			const popup = document.querySelector('.board-popup');
+			const overlay = document.querySelector('.overlay');
+			popup.style.opacity = '0';
+			popup.style.pointerEvents = 'none';
+			popup.style.display = 'none';
+			overlay.style.display = 'none';
+		}
+
+		function trySubmit(user, content) {
+			closeBoardPopup();
 			openPopup();
-			console.log("click");
-			// pushIssue("Delete Later", "Delete Later");	
+			// console.log("click");
+			pushIssue(user, content);	
+		}
+
+		function OpenText() {
+			openBoardPopup();
 		}
 	</script>
 
@@ -118,9 +224,9 @@
 			// 创建 header 元素
 			const header = document.createElement('header');
 			const date = document.createElement('span');
-			date.textContent = `最新回复于 ${conversation.replyDate}`; // 替换为最新回复日期
+			date.textContent = `回复于 ${conversation.replyDate}`; // 替换为最新回复日期
 			const title = document.createElement('h3');
-			title.textContent = conversation.title; // 替换为 issue 标题
+			title.textContent = `来自 ${conversation.title} 的留言`; // 替换为 issue 标题
 			title.appendChild(date)
 			header.appendChild(title);
 			// header.appendChild(date);
@@ -172,7 +278,6 @@
 			// 将 article 元素插入 #content .inner .issues 元素中
 			issues.appendChild(article);
 		}
-
 
 		fetchAllIssueComments()
 			.then(updatedConversations => {
