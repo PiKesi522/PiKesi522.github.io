@@ -79,7 +79,14 @@ article .answer {
 
 article img {
     border-radius: 3px;
-    box-shadow: 0px 0px 10px #333;
+}
+
+article .s{
+    box-shadow: 0px 0px 10px #6a5123;
+}
+
+article .p{
+    box-shadow: 0px 0px 10px #364d26;
 }
 
 article h3 {

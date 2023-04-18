@@ -24,7 +24,6 @@
 	<script src="/board/js/token.js"></script>
 	<script src="/board/js/getIssue.js"></script>
 	<script src="/board/js/pushIssue.js"></script>
-	<script src="/board/js/deleteAllIssue.js"></script>
 
 	<div class="loading-container">
 		<div class="loading"></div>
@@ -261,6 +260,7 @@
 			const ask = document.createElement('div');
 			ask.classList.add('ask');
 			const askImage = document.createElement('img');
+			askImage.classList.add('s');
 			askImage.src = '/board/S.png'; // 替换为提问者的图像
 			askImage.style.width = '30px';
 			ask.appendChild(askImage);
@@ -281,6 +281,7 @@
 			const answer = document.createElement('div');
 			answer.classList.add('answer');
 			const answerImage = document.createElement('img');
+			answerImage.classList.add('p');
 			answerImage.src = '/board/P.png'; // 替换为回答者的图像
 			answerImage.style.width = '30px';
 			answer.appendChild(answerImage);
