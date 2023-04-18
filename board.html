@@ -229,14 +229,12 @@
 		hideLoading();
 
 		function openPopup() {
-			console.log('open');
 			const popup = document.querySelector('.popup');
 			popup.classList.add('visible');
 			console.log(popup);
 			// setTimeout(function () {
 			// 	closePopup();
 			// }, 2000);
-			console.log('open2');
 		}
 
 		function closePopup() {
@@ -280,10 +278,10 @@
 		function trySubmit(user, content) {
 			// console.log("click");
 			closeBoardPopup();
-			// showLoading();
-					openPopup();
+			showLoading();
 			pushIssue(user, content)
 				.then(result => {
+					openPopup();
 					// 清空留言板
 					document.querySelector('#message').value = null;
 					console.log(result);
