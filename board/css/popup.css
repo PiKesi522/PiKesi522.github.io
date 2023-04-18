@@ -1,6 +1,7 @@
 
 /* 定义弹窗样式 */
-.popup {
+.popup,
+.failed-popup {
     position: fixed;
     top: 45%;
     left: 55%;
@@ -19,21 +20,25 @@
 }
 
 /* 显示弹窗 */
-.popup.visible {
+.popup .visible,
+.failed-popup .visible{
     opacity: 1;
     /* 当添加 visible 类时，透明度变为1 */
 }
 
-.popup .head {
+.popup .head, 
+.failed-popup .head {
     text-align: center;
     padding-bottom: 1em;
 }
 
-.popup svg {
+.popup svg, 
+.failed-popup svg {
     vertical-align: middle;
 }
 
-.popup h2 {
+.popup h2,
+.failed-popup h2 {
     display: inline-block;
     margin-left: 1em;
     /* text-align: center; */
@@ -42,7 +47,8 @@
     margin: 0.5em;
 }
 
-.popup p {
+.popup p,
+.failed-popup p {
     font-size: 18px;
     text-align: center;
 }

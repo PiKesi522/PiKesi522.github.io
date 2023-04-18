@@ -59,6 +59,34 @@
 			display: none;
 			/* 默认不显示 */
 		}
+
+		.loading-container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 9999;
+		}
+
+		.loading {
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			border: 6px solid rgba(255, 255, 255, 0.5);
+			border-top-color: #fff;
+			animation: spin 1s ease-in-out infinite;
+		}
+
+		@keyframes spin {
+			to {
+				transform: rotate(360deg);
+			}
+		}
 	</style>
 </head>
 
@@ -67,6 +95,10 @@
 	<script src="/board/js/token.js"></script>
 	<script src="/board/js/getIssue.js"></script>
 	<script src="/board/js/pushIssue.js"></script>
+
+	<div class="loading-container">
+		<div class="loading"></div>
+	</div>
 
 	<div class="popup">
 		<div class="head">
@@ -82,6 +114,23 @@
 		<p style="color: rgb(34, 19, 19); font-weight: 600;">由衷感谢您对本网站的支持！</p>
 		<hr>
 		<p>您的留言将在审查被回复后展示在留言板中！</p>
+		<!-- <button onclick="closePopup()">Close</button> -->
+	</div>
+
+	<div class="failed-popup">
+		<div class="head">
+			<svg t="1681748112100" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+				p-id="2640" width="50" height="50">
+				<path
+					d="M511.998465 65.290005c-246.722194 0-446.708971 200.001103-446.708971 446.708971 0 246.708891 199.986777 446.709995 446.708971 446.709995 246.708891 0 446.711018-200.001103 446.711018-446.709995C958.709483 265.291109 758.707356 65.290005 511.998465 65.290005L511.998465 65.290005zM756.308727 405.884171 465.103412 697.081299c-6.804986 6.819313-17.856693 6.819313-24.662703 0L267.69025 524.33084c-6.804986-6.804986-6.804986-17.856693 0-24.668843l54.29765-54.290487c6.804986-6.812149 17.856693-6.812149 24.662703 0l106.122993 106.107643 224.574778-224.561475c6.804986-6.812149 17.857716-6.812149 24.663726 0l54.29765 54.290487C763.128039 388.020314 763.128039 399.072021 756.308727 405.884171L756.308727 405.884171 756.308727 405.884171zM756.308727 405.884171"
+					fill="#89C27E" p-id="2641"></path>
+			</svg>
+			<h2>提交失败</h2>
+		</div>
+
+		<p style="color: rgb(34, 19, 19); font-weight: 600;">由衷感谢您对本网站的支持！</p>
+		<hr>
+		<p>请检查您的网络状态是否正常或直接与本人联系</p>
 		<!-- <button onclick="closePopup()">Close</button> -->
 	</div>
 
@@ -138,12 +187,10 @@
 				</header>
 			</div>
 			<div class="submit">
-				<button onclick="OpenText()">
+				<button onclick="openBoardPopup()">
 					<img src="/board/button.png" style="width: 100%;" alt="button">
 				</button>
 			</div>
-
-
 
 			<div class="issues">
 				<!-- <article class="box post post-excerpt">
@@ -169,16 +216,44 @@
 
 	<!-- 提交至留言板 -->
 	<script>
+
+		function showLoading() {
+			const loadingContainer = document.querySelector('.loading-container');
+			loadingContainer.style.display = 'flex';
+		}
+
+		function hideLoading() {
+			const loadingContainer = document.querySelector('.loading-container');
+			loadingContainer.style.display = 'none';
+		}
+		hideLoading();
+
 		function openPopup() {
+			console.log('open');
 			const popup = document.querySelector('.popup');
+			popup.classList.add('visible');
+			console.log(popup);
+			// setTimeout(function () {
+			// 	closePopup();
+			// }, 2000);
+			console.log('open2');
+		}
+
+		function closePopup() {
+			const popup = document.querySelector('.popup');
+			popup.classList.remove('visible');
+		}
+
+		function openFailedPopup() {
+			const popup = document.querySelector('.failed-popup');
 			popup.classList.add('visible');
 			setTimeout(function () {
 				closePopup();
 			}, 2000);
 		}
 
-		function closePopup() {
-			const popup = document.querySelector('.popup');
+		function closeFailedPopup() {
+			const popup = document.querySelector('.failed-popup');
 			popup.classList.remove('visible');
 		}
 
@@ -203,15 +278,25 @@
 		}
 
 		function trySubmit(user, content) {
-			closeBoardPopup();
-			openPopup();
 			// console.log("click");
-			pushIssue(user, content);	
+			closeBoardPopup();
+			// showLoading();
+					openPopup();
+			pushIssue(user, content)
+				.then(result => {
+					// 清空留言板
+					document.querySelector('#message').value = null;
+					console.log(result);
+				})
+				.catch(error => {
+					openFailedPopup();
+					console.log(error);
+				})
+				.finally(() => {
+					hideLoading();
+				})
 		}
 
-		function OpenText() {
-			openBoardPopup();
-		}
 	</script>
 
 	<!-- 读取留言板的内容 -->

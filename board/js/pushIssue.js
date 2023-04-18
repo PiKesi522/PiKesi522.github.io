@@ -4,15 +4,23 @@ const pushHeader = {
 }
 
 function pushIssue(title, body) {
+    return new Promise((resolve, reject) => {
 
-    fetch(`https://api.github.com/repos/${repo}/issues`, {
-        method: 'POST',
-        headers: pushHeader,
-        body: JSON.stringify({ title, body })
+        fetch(`https://api.github.com/repos/${repo}/issues`, {
+            method: 'POST',
+            headers: pushHeader,
+            body: JSON.stringify({ title, body })
+        })
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
+                resolve(data);
+            })
+            .catch(error => {
+                // console.error(error);
+                reject(error);
+            });
     })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error(error));
 }
 
 // pushIssue("Test", "123");
