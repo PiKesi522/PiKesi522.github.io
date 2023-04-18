@@ -1,4 +1,3 @@
-
 /* 定义弹窗样式 */
 .popup,
 .failed-popup {
@@ -20,19 +19,19 @@
 }
 
 /* 显示弹窗 */
-.popup .visible,
-.failed-popup .visible{
+.popup.visible,
+.failed-popup.visible {
     opacity: 1;
     /* 当添加 visible 类时，透明度变为1 */
 }
 
-.popup .head, 
+.popup .head,
 .failed-popup .head {
     text-align: center;
     padding-bottom: 1em;
 }
 
-.popup svg, 
+.popup svg,
 .failed-popup svg {
     vertical-align: middle;
 }
@@ -51,4 +50,89 @@
 .failed-popup p {
     font-size: 18px;
     text-align: center;
+}
+
+
+.board-popup {
+    position: fixed;
+    top: 45%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 2%;
+    z-index: 9999;
+    opacity: 0;
+    /* 初始状态为透明 */
+    pointer-events: none;
+    /* 初始状态下不响应鼠标事件 */
+  transition: all 0.3s ease-in-out;
+    /* 添加过渡效果 */
+}
+
+.board-popup .MSG {
+    text-align: center;
+    font-size: 24px;
+    line-height: 36px;
+    padding: 0 0 1em 0;
+    color: #b99999;
+}
+
+.board-popup div {
+    padding: 0 1em;
+}
+
+.board-popup .close-button {
+    margin: 2em 2em 0 0;
+    float: right;
+}
+
+.board-popup .submit-button {
+    margin: 2em 0 0 2em;
+    float: left;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+    display: none;
+    /* 默认不显示 */
+}
+
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10001;
+}
+
+.loading {
+    position: fixed;
+    top: 45%;
+    left: 55%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 6px solid rgba(255, 255, 255, 0.5);
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }

@@ -15,78 +15,7 @@
 	<link rel="stylesheet" href="/board/css/popup.css" />
 	<link rel="icon" href="/assets/images/head1.png">
 	<style>
-		.board-popup {
-			position: fixed;
-			top: 45%;
-			left: 55%;
-			transform: translate(-50%, -50%);
-			width: 400px;
-			padding: 20px;
-			background-color: #fff;
-			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-			border-radius: 2%;
-			z-index: 9999;
-			opacity: 0;
-			/* 初始状态为透明 */
-			pointer-events: none;
-			/* 初始状态下不响应鼠标事件 */
-			transition: opacity 0.3s ease-in-out;
-			/* 添加过渡效果 */
-		}
 
-		.board-popup div {
-			padding: 0 1em;
-		}
-
-		.board-popup .close-button {
-			margin: 2em 2em 0 0;
-			float: right;
-		}
-
-		.board-popup .submit-button {
-			margin: 2em 0 0 2em;
-			float: left;
-		}
-
-		.overlay {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.5);
-			z-index: 9998;
-			display: none;
-			/* 默认不显示 */
-		}
-
-		.loading-container {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			background-color: rgba(0, 0, 0, 0.5);
-			z-index: 9999;
-		}
-
-		.loading {
-			width: 60px;
-			height: 60px;
-			border-radius: 50%;
-			border: 6px solid rgba(255, 255, 255, 0.5);
-			border-top-color: #fff;
-			animation: spin 1s ease-in-out infinite;
-		}
-
-		@keyframes spin {
-			to {
-				transform: rotate(360deg);
-			}
-		}
 	</style>
 </head>
 
@@ -95,6 +24,7 @@
 	<script src="/board/js/token.js"></script>
 	<script src="/board/js/getIssue.js"></script>
 	<script src="/board/js/pushIssue.js"></script>
+	<script src="/board/js/deleteAllIssue.js"></script>
 
 	<div class="loading-container">
 		<div class="loading"></div>
@@ -114,7 +44,6 @@
 		<p style="color: rgb(34, 19, 19); font-weight: 600;">由衷感谢您对本网站的支持！</p>
 		<hr>
 		<p>您的留言将在审查被回复后展示在留言板中！</p>
-		<!-- <button onclick="closePopup()">Close</button> -->
 	</div>
 
 	<div class="failed-popup">
@@ -130,23 +59,26 @@
 
 		<p style="color: rgb(34, 19, 19); font-weight: 600;">由衷感谢您对本网站的支持！</p>
 		<hr>
-		<p>请检查您的网络状态是否正常或直接与本人联系</p>
-		<!-- <button onclick="closePopup()">Close</button> -->
+		<p>请检查您的网络连接或直接联系@PiKesi</p>
 	</div>
-
 
 	<div class="board-popup">
 		<form id="message-form">
+			<div class="MSG">
+				<h2 style="color: #ba3a3a; font-weight: 800;">创建留言</h2>
+			</div>
 			<div class="title">
-				<label style="display: inline-block; width: 25%;" for="name">您的称呼：</label>
-				<input style="display: inline-block; width: 74%;" type="text" id="name" name="name" value="匿名用户"
+				<label style="display: inline-block; width: 30%;" for="name">您的称呼：</label>
+				<input style="display: inline-block; width: 69%;" type="text" id="name" name="name" value="匿名用户"
 					required>
 			</div>
+			<hr style="margin-top: 10px;">
 			<div class="message">
-				<label for="message">留言：</label>
-				<textarea id="message" name="message" required></textarea>
+				<!-- <label for="message">&nbsp; Message：</label> -->
+				<textarea maxlength="1000" id="message" name="message" style="resize: none; height: 150px;"
+					placeholder="想对PiKesi说的话... (1000字以内)" required></textarea>
 			</div>
-			<button class="submit-button" type="submit">提交留言</button>
+			<button class="submit-button" type="submit">发布留言</button>
 			<button class="close-button" onclick="closeBoardPopup()">关闭</button>
 		</form>
 	</div>
@@ -182,13 +114,14 @@
 				<img src="/board/Board_copper.png" alt="Message Board">
 
 				<hr style="margin: 0;">
-				<header>
+				<!-- <header>
 					<h2>匿名留言板</h2>
-				</header>
+				</header> -->
 			</div>
 			<div class="submit">
 				<button onclick="openBoardPopup()">
-					<img src="/board/button.png" style="width: 100%;" alt="button">
+					<!-- <img src="/board/button.png" style="width: 100%;" alt="button"> -->
+					留下一笔
 				</button>
 			</div>
 
@@ -220,6 +153,7 @@
 		function showLoading() {
 			const loadingContainer = document.querySelector('.loading-container');
 			loadingContainer.style.display = 'flex';
+			document.body.style.overflow = 'hidden'; // 防止页面滚动
 		}
 
 		function hideLoading() {
@@ -231,22 +165,23 @@
 		function openPopup() {
 			const popup = document.querySelector('.popup');
 			popup.classList.add('visible');
-			console.log(popup);
-			// setTimeout(function () {
-			// 	closePopup();
-			// }, 2000);
+			// console.log(popup);
+			setTimeout(function () {
+				closePopup();
+			}, 2000);
 		}
 
 		function closePopup() {
 			const popup = document.querySelector('.popup');
 			popup.classList.remove('visible');
+			document.body.style.overflow = ''; // 恢复页面滚动
 		}
 
 		function openFailedPopup() {
 			const popup = document.querySelector('.failed-popup');
 			popup.classList.add('visible');
 			setTimeout(function () {
-				closePopup();
+				closeFailedPopup();
 			}, 2000);
 		}
 
@@ -258,10 +193,11 @@
 		function openBoardPopup() {
 			const popup = document.querySelector('.board-popup');
 			const overlay = document.querySelector('.overlay');
-			popup.style.opacity = '1';
+			popup.style.opacity = '0';  // 设置为0
 			popup.style.pointerEvents = 'auto';
 			setTimeout(() => {
 				popup.style.display = 'block';
+				popup.style.opacity = '1';  // 过渡到1
 			}, 10);
 			overlay.style.display = 'block';
 		}
@@ -269,9 +205,11 @@
 		function closeBoardPopup() {
 			const popup = document.querySelector('.board-popup');
 			const overlay = document.querySelector('.overlay');
-			popup.style.opacity = '0';
+			popup.style.opacity = '0';  // 过渡到0
 			popup.style.pointerEvents = 'none';
-			popup.style.display = 'none';
+			setTimeout(() => {
+				popup.style.display = 'none';
+			}, 300);  // 在过渡完成后设置为none
 			overlay.style.display = 'none';
 		}
 
@@ -279,11 +217,12 @@
 			// console.log("click");
 			closeBoardPopup();
 			showLoading();
+
+			const successPopup = document.querySelector('.success-popup');
 			pushIssue(user, content)
 				.then(result => {
-					openPopup();
-					// 清空留言板
 					document.querySelector('#message').value = null;
+					openPopup();
 					console.log(result);
 				})
 				.catch(error => {
