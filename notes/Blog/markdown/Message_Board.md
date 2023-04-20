@@ -1,0 +1,7 @@
+从Github Issue中读取对话内容
+
+留言使用Github OAuth2.0 的客户端认证模式，不需要用户关联自身github
+
+通过Github REST API提供的接口获取对应仓库中的ISSUE，只有我的账号回复并且close了以后，这条留言才能被回复
+
+用户点击按钮展开提交窗口，留言完成以后同样通过REST API 把提交的内容上传到ISSUE中
