@@ -1,6 +1,7 @@
-<div style="font-size:36px; text-indent:2em; font-weight:800; padding:0 0 1em 0">
+<div style="font-size:36px; text-indent:1em; font-weight:800; padding:0 0 1em 0">
     A 游游的you矩阵 <span style="color:green; float:right; margin: 0 1em 0 0">AC</span>
 </div>
+
 
 
 <div style="font-size:24px; text-indent:1em; color:black; font-weight:600">
@@ -93,12 +94,13 @@ void (async function () {
 
 -----
 
-<div style="font-size:36px; text-indent:2em; font-weight:800; padding:1em 0">
+<div style="font-size:36px; text-indent:1em; font-weight:800; padding:1em 0">
     B 游游的最小公倍数 <span style="color:green; float:right; margin: 0 1em 0 0">AC</span>
 </div>
 <div style="font-size:24px; text-indent:1em; color:black; font-weight:600">
     题目描述
 </div>
+
 
 ~~~txt
 游游拿到了一个正整数n，她希望找到两个正整数a和b(a≤b)，使得a＋b = n，且a和b的lcm(最小公倍数)尽可能大。你能帮帮她吗?
@@ -193,7 +195,7 @@ void async function () {
 
 -----
 
-<div style="font-size:36px; text-indent:2em; font-weight:800; padding:1em 0">
+<div style="font-size:36px; text-indent:1em; font-weight:800; padding:1em 0">
     C 游游的二进制数 <span style="color:#EE0; float:right; margin: 0 1em 0 0">WA</span>
 </div>
 

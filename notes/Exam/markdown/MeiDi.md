@@ -1,6 +1,7 @@
-<div style="font-size:36px; text-indent:2em; font-weight:800; padding:0 0 1em 0">
+<div style="font-size:36px; text-indent:1em; font-weight:800; padding:0 0 1em 0">
     A 前端编程题 <span style="color:green; float:right; margin: 0 1em 0 0">AC</span>
 </div>
+
 
 <div style="font-size:24px; text-indent:1em; color:black; font-weight:600">
     题目描述
@@ -57,12 +58,13 @@ module.exports = {
 
 -----
 
-<div style="font-size:36px; text-indent:2em; font-weight:800; padding:1em 0">
+<div style="font-size:36px; text-indent:1em; font-weight:800; padding:1em 0">
     B 地区数据处理 <span style="color:green; float:right; margin: 0 1em 0 0">AC</span>
 </div>
 <div style="font-size:24px; text-indent:1em; color:black; font-weight:600">
     题目描述
 </div>
+
 
 
 ~~~txt
@@ -115,7 +117,7 @@ void async function () {
 
 -----
 
-<div style="font-size:36px; text-indent:2em; font-weight:800; padding:1em 0">
+<div style="font-size:36px; text-indent:1em; font-weight:800; padding:1em 0">
     C 数组去重 <span style="color:green; float:right; margin: 0 1em 0 0">AC</span>
 </div>
 

@@ -1,6 +1,7 @@
-<div style="font-size:36px; text-indent:2em; font-weight:800; padding:0 0 1em 0">
+<div style="font-size:36px; text-indent:1em; font-weight:800; padding:0 0 1em 0">
     A 小红的数组增值 <span style="color:green; float:right; margin: 0 1em 0 0">AC</span>
 </div>
+
 
 
 
@@ -86,12 +87,13 @@ console.log(result % m);
 
 -----
 
-<div style="font-size:36px; text-indent:2em; font-weight:800; padding:1em 0">
+<div style="font-size:36px; text-indent:1em; font-weight:800; padding:1em 0">
     B 小红的树上染色 <span style="color:red; float:right; margin: 0 1em 0 0">18</span>
 </div>
 <div style="font-size:24px; text-indent:1em; color:black; font-weight:600">
     题目描述
 </div>
+
 
 
 ~~~txt
@@ -206,7 +208,7 @@ else{
 
 -----
 
-<div style="font-size:36px; text-indent:2em; font-weight:800; padding:1em 0">
+<div style="font-size:36px; text-indent:1em; font-weight:800; padding:1em 0">
     C 小红的字符串权值 <span style="color:#EE0; float:right; margin: 0 1em 0 0">WA</span>
 </div>
 
