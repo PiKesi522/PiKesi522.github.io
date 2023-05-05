@@ -1,5 +1,68 @@
 ### 为什么不做游戏？
 
+-----
+
+### let var const不同
+
+- var，存在于函数作用域，最基本的变量，可以先使用，在声明【因为在预解析的时候会找到】，可以重复用var定义同名。
+
+- let，解决var在全局作用域下的问题，只能在块级作用域下使用。由于没有预解析，所以不能先使用再定义。
+
+~~~js
+// 函数作用域
+if(true){
+    var name = 'Matt';
+    console.log(name);	// Matt
+}
+console.log(name);		// Matt
+
+// 块作用域
+if(true){
+    let name = 'Matt';
+    console.log(name);	// Matt
+}
+console.log(name);		// 没有定义
+~~~
+
+- const，和let相同，但是const将固定引用的内存地址，所以不能修改本身指向的变量，但是可以修改对象内容
+
+### 声明提升
+
+如果出现以下类似代码
+
+~~~js
+function foo(){
+    console.log(age);
+    var age = 26;
+}
+foo() // undefined
+~~~
+
+ES6会将var在函数体内的声明提升到函数最上方进行，使得其等价于以下代码
+
+~~~js
+function foo(){
+    var age = undefined;
+    console.log(age);
+    age = 26;
+}
+foo() // undefined
+~~~
+
+但是对于let来说，就不存在变量提升这一说法，必须先定义再使用。
+
+综上由于var的函数作用域问题会导致变量渗透到不必要的地方，通过let可以有效控制
+
+~~~js
+for(var i = 0; i < 5; i++){}
+console.log(i) // 5
+
+for(let i = 0; i < 5; i++){}
+console.log(i) // undefined
+~~~
+
+------
+
 ### Promise的三种状态
 
 - pending：还未结束
@@ -103,13 +166,20 @@
 
 ### JS的Typeof能返回的值
 
-- undefined：未定义、未赋值的变量
+- undefined：未定义、未赋值的变量，当使用let和var进行初始化的但没有赋值就相当于赋值了undefined
 - boolean
-- string
+- string：字符串本质上是不可变的，所有的字符串操作都是开辟了新的变量空间
 - number
-- object：对象，包括**null也算object**
+- object：对象，包括**null表示空对象指针，也属于object**
 - *bigint*
 - *symbol*
+
+-----
+
+### JS的基本数据类型和引用数据类型
+
+- 原始值【基本数据类型】：直接定义的非Object类属性，都是存在栈内存中，所以无法被转为Object对象而添加属性。被复制的时候在栈内存中创建一个完全一致的对象，对于被复制的值的修改不会影响本属性
+- 引用值【引用数据类型】：
 
 ------
 
@@ -258,7 +328,7 @@ console.log(a());
 
 ### import，require
 
-- require只在Node.js下支持是，是在运行时动态加载的文件，**可以在文档中任何地方加载**。
+- require只在Node.js下支持，是在运行时动态加载的文件，**可以在文档中任何地方加载**。
   1. 实际通过require引用的module是一个**拷贝对象**，是可以修改的变量
 - import是基于ES6规范，在浏览器下都支持的。在预编译的时候就需要加载，所以必须写在文档最上方。
   1. 通过import引用的是一个**引用对象**，是不能修改的常量
@@ -267,19 +337,187 @@ console.log(a());
 
 ### http状态码
 
+1.  1XX 临时状态码
+2.  2XX 已被接受处理【200 成功状态码；】
+3.  3XX 重定向
+4.  4XX 客户端错误【400 语义错误；403 拒绝执行；404 未找到资源；】
+5.  5XX 服务端错误【】
+
+-----
+
+### https中SSL实现
+
+-----
+
 ### **懒加载**	
+
+1. img标签中的src属性默认不写完整，通过data-属性来保存所有的图片，当窗口滑动到某一特定位置的时候，对其进行加载
+2. img标签中加上浏览器自带的lazyload属性
+
+-----
 
 ### 渲染与重绘，重排
 
 ### async返回值
 
+返回的是一个Promise对象
+
 -----
 
-### let var const不同
+### DOM0级事件和DOM2级事件
 
-- var，最基本的变量，可以先使用，在声明【因为在预解析的时候会找到】，可以重复用var定义同名。
-- let，解决var在全局作用域下的问题，只能在块级作用域下使用。由于没有预解析，所以不能先使用再定义。
-- const，大致和let类似，但是const将固定引用的内存地址，所以不能修改
+- 直接写在标签里的事件都是dom0级事件：\<div onclick="foo()"> div.onclick=function(){}。dom0事件会相互覆盖
+- 通过动态绑定的方法对于dom的添加都是dom2级事件：addEventLisenter（需要传入false参数为事件冒泡，传入true参数为事件捕获）。dom2级事件不会覆盖
+
+~~~js
+const oDiv = document.getElementById("d");
+
+oDiv.addEventListener('click', function(){
+    console.log(1);
+}, true) // 事件捕获
+
+oDiv.addEventListener('click', function(){
+    console.log(1);
+}, true) // 事件冒泡
+~~~
+
+冒泡是从下往上执行，捕获是从上往下执行
+
+-----
+
+### 事件冒泡和事件代理
+
+- **事件冒泡**指的是，从最深的子节点开始，在节点树上不断循环往上找父节点。例如 div>ul>li>a，如果在a上添加一个点击事件，那么这个事件就会一层一层往外执行，执行的顺序为 a>li>ul>div
+
+- **事件委托**指的是，一些类似的事件，利用事件冒泡，可以把事件委托给其他事件进行统一处理
+
+例如有以下元素
+
+~~~html
+<ul id="ul1">
+    <li>111</li>
+    <li>222</li>    
+    <li>333</li>
+</ul>
+~~~
+
+默认方法给每个li添加点击事件的方法：
+
+~~~js
+const ul = document.getElementById("ul1");
+const ali = ul.getElementsByTagName("li");
+for(let i = 0; i < ali.length; i++){
+    ali[i].onclick = function(){
+        alert(123);
+    }
+}
+~~~
+
+但是通过事件委托，可以把li的每个点击事件委托给ul去做
+
+~~~js
+const ul = document.getElementById("ul1");
+ul.onclick = function(){
+    alert(123);
+}
+~~~
+
+当然使用这种方法会导致ul也会有一个onclick事件，所以需要通过nodeName来获取具体的节点名称
+
+~~~js
+const ul = document.getElementById("ul1");
+ul.onclick = function(){
+    var ev = ev || window.event;
+    var target = ev.target || ev.srcElement;
+    if(target.nodeName.toLowerCase() === 'li'){
+        alert(123);
+    }
+}
+~~~
+
+1. 这种方法对于后续新增的同级别li节点，并不会添加点击事件，所以需要同样再对ul进行一次事件委托即可。
+2. 由于是用户的输入对窗口元素添加的方法，所以可能用户点击的不是我们所需要的窗口元素，而是其100%宽高的子元素，那么需要先通过target.parent找到最上方的组件，然后再往下找
+
+~~~js
+const ul = document.getElementById("ul1");
+ul.addEventListener('click',function(ev){
+    var target = ev.target;
+    while(target !== ul){
+        if(target.tagName.toLowerCase() === 'li'){
+            cnonsole.log('123');
+            break;
+        }
+        target = target.parentNode;
+    }
+})
+~~~
+
+-----
+
+### 事件冒泡和事件捕获
+
+在上述的基础上，假设有一个div嵌套结构，div1 > div2 > div3 > div4，当进行点击的时候事件开始传递
+
+1. 先是1 - 2 - 3 - 4，从外到内逐层传入，这个步骤叫做**事件捕获**
+2. 再是4 - 3 - 2 - 1，从内到外逐层输出，这个步骤叫做**事件冒泡**
+
+~~~js
+var body=document.getElementsByTagName('body')[0];
+ 
+window.addEventListener('click',function(){
+        console.log('window')
+},false)
+ body.addEventListener('click',function(){
+        console.log('body')
+},false)
+ 
+var oDiv=document.getElementsByTagName('div')[0];
+ oDiv.addEventListener('click',function(){
+    console.log(1)
+ },false)
+ 
+oDiv.addEventListener('click',function(){
+  console.log(2)
+},false)
+
+// ----- 事件冒泡输出 -----
+/*
+	1
+	2
+	body
+	window
+*/
+~~~
+
+~~~js
+var body=document.getElementsByTagName('body')[0];
+ 
+window.addEventListener('click',function(){
+        console.log('window')
+},true)
+ body.addEventListener('click',function(){
+        console.log('body')
+},true)
+ 
+var oDiv=document.getElementsByTagName('div')[0];
+ oDiv.addEventListener('click',function(){
+    console.log(1)
+ },true)
+ 
+oDiv.addEventListener('click',function(){
+  console.log(2)
+},true)
+
+// ----- 事件捕获输出 -----
+/*
+	window
+	body
+	1
+	2
+*/
+~~~
+
+如果同时存在冒泡和捕获，那还是按照一开始写的顺序，先捕获，再冒泡
 
 ------
 
@@ -289,10 +527,36 @@ console.log(a());
 
 ### 跨域问题
 
+1. JSONP
+2. CORS
+3. 反向代理
+
 ### 项目难点
 
 ### ToB和ToC不同
 
-### 基本数据类型和引用数据类型
+-----
+
+### 设计原则
+
+设计原则不是要完全不能违背，而是要尽量少的违反
+
+#### SOLID五大基本原则
+
+- 单一职责原则：每个程序只做一个功能，过大的类需要把他拆开
+- 开放封闭原则：（promise 的then扩展）对扩展开放，对修改封闭
+- 里氏替换原则：子类有父类所有的功能，但是不能改变父类的原有功能
+- 接口隔离原则：类不需要知道的接口越少越好
+- 依赖反转原则：高层类不应该依赖底层类，而是应该依赖抽象类
+
+#### 23种设计模式
+
+- 工厂模式：只通过构造器和传入参数进行类对象的创建
+- 单例模式：一个类最多只能创建一个实例
+- 订阅发布模式：（事件绑定）对于状态的更新会自动发布给订阅者
+- 迭代器模式：提供一种方法顺序访问一个聚合对象中各个元素，而又不暴露该对象的内部表示
+- 代理模式：（事件代理）一个对象不能/不方便直接访问另一个对象的时候，需要一个代理
+
+-----
 
 ### URL解析过程
