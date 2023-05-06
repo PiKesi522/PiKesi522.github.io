@@ -81,35 +81,25 @@
 	<script src="assets/js/main.js"></script>
 
 	<script>
-		const folderUrl = "/assets/MainPage/";
+		fetch("/assets/mainPage/index.json")
+			.then(response => response.json())
+			.then(photos => {
+				const index = photos.images;
+				// console.log(index);
+				const randomIndex = Math.floor(Math.random() * index.length);
+				// console.log(randomIndex);
+				const selectedPhoto = index[randomIndex];
+				// console.log(selectedPhoto);
 
-		fetch(folderUrl)
-			.then(response => response.text())
-			.then(folderContent => {
-				const jpgFileRegex = /<a href="\/assets\/MainPage\/([^"]+\.jpg)"[^>]*>/g;
-				const jpgFiles = [];
-				let match;
-				while (match = jpgFileRegex.exec(folderContent)) {
-					jpgFiles.push(match[1]);
-				}
-
-				const randomIndex = Math.floor(Math.random() * jpgFiles.length);
-				const selectedJpgFile = jpgFiles[randomIndex];
-				const selectedJpgFilePath = folderUrl + decodeURIComponent(selectedJpgFile);
-
-				const imgElement = document.querySelector(".random-display img");
-				imgElement.src = selectedJpgFilePath;
-
-				const photoInfo = decodeURIComponent(selectedJpgFile).split("-");
-				const selectedYear = photoInfo[0];
-				const selectedLocation = photoInfo[1] + " " + photoInfo[2].split(".")[0];
+				const imgElement = document.querySelector(".random-display img");;
+				imgElement.src = '/assets/mainPage/' + selectedPhoto;
+				// console.log('/assets/mainPage/' + selectedPhoto);
+				const info = selectedPhoto.split('-');
+				// imgElement.alt = selectedPhoto.alt;
 				const yearElement = document.querySelector(".random-display .year");
-				yearElement.textContent = selectedYear;
+				yearElement.textContent = info[0];
 				const locationElement = document.querySelector(".random-display .location");
-				locationElement.textContent = selectedLocation;
-			})
-			.catch(error => {
-				console.error(error);
+				locationElement.textContent = info[1] + ' ' + info[2].split('.')[0];
 			});
 	</script>
 </body>
