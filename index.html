@@ -79,15 +79,14 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
-	<!-- <script src="assets/js/playmusic.js"></script>  -->
 
 	<script>
-		const folderUrl = "MainPage/";
+		const folderUrl = "/assets/MainPage/";
 
 		fetch(folderUrl)
 			.then(response => response.text())
 			.then(folderContent => {
-				const jpgFileRegex = /<a href="\/MainPage\/([^"]+\.jpg)"[^>]*>/g;
+				const jpgFileRegex = /<a href="\/assets\/MainPage\/([^"]+\.jpg)"[^>]*>/g;
 				const jpgFiles = [];
 				let match;
 				while (match = jpgFileRegex.exec(folderContent)) {
