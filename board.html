@@ -319,7 +319,7 @@
 	<!-- Sidebar -->
 	<div id="sidebar">
 		<script>
-			fetch('sidebar.html')
+			fetch('./component/sidebar.html')
 				.then(response => response.text())
 				.then(data => {
 					// 获取文本字符串中的每一行
@@ -332,6 +332,12 @@
 		</script>
 	</div>
 
+
+	<!-- MusicPlayer -->
+	<div id="player">
+		<script src="./component/loadMusicPlayer.js"></script>
+	</div>
+	
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/browser.min.js"></script>

@@ -2,4 +2,6 @@
 
 播放的时候像唱片一样旋转，点击暂停，更改SVG中的Line的style为visible。
 
-后续尝试增加播放列表功能
+音乐的功能我想做成一个类似于全局播放器的效果，所以会记录当前音乐播放的时间和顺序
+
+这个功能我通过sessionStorage的方案进行实现：当用户进行窗口切换的时候，利用window.beforeunload来记录当前audio的currentTime；切换到下一个窗口的时候，通过读取sessionStorage来获取之前的时间，从而实现继续播放音乐
