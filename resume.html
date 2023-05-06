@@ -11,7 +11,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
-	<link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 </head>
 
 <body class="is-preload">
@@ -382,18 +382,18 @@
                         </h2>
                         <hr />
                         <p>
-                            <ul>
+                        <ul>
                             <li>个人沟通交流能力较好，在项目中，能够和同组人员积极交流项目文档中不明确的部分，发现业务逻辑中的问题并解决问题。
-                            <br/>
+                                <br />
                             <li>学习能力强，能够相较同级学生更早修完所学课程，并且在课余时间自学Unity引擎进行游戏开发。
-                            <br/>
+                                <br />
                             <li>富有创新力，曾参加“互联网+”创新创业大赛，尝试计算机同其他领域的结合创新。
-                            <br/>
+                                <br />
                             <li>执行力强，对于项目的每周任务都能够及时交付，并且确保质量和成果。同时保持每天保持阅读30min，参加各种运动项目如篮球，羽毛球等。
-                            <br/>
+                                <br />
                             <li>个人对于科技行业充满热情，对于电影、音乐、文学等方面抱有兴趣，希望未来的职业方向涉及到计算机、互联网与人进行交互的领域，有志于从事产品开发方向。
-                            <!-- <span class="mark-txt">“多静多思考，反省不张扬”</span>是我给自己总结的“十字箴言”，鞭策自己做人既不能以己度人，也不以人观己，要脚踏实地做事，坚持自己的梦想和本心。 -->
-                        </p>
+                                <!-- <span class="mark-txt">“多静多思考，反省不张扬”</span>是我给自己总结的“十字箴言”，鞭策自己做人既不能以己度人，也不以人观己，要脚踏实地做事，坚持自己的梦想和本心。 -->
+                                </p>
                     </section>
                 </section>
             </article>
@@ -401,21 +401,49 @@
         </div>
     </div>
 
-	<!-- Sidebar -->
-	<div id="sidebar">
-		<script>
-			fetch('sidebar.html')
-				.then(response => response.text())
-				.then(data => {
-					// 获取文本字符串中的每一行
-					const lines = data.split('\n');
-					// 修改第三行
-					lines[16] = "        <li class='current'><a href='/resume.html'>Resume</a></li>\n";
-					// 将修改后的文本字符串重新加载到myDiv元素中
-					document.getElementById('sidebar').innerHTML = lines.join('');
-				});
-		</script>
-	</div>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <script>
+            fetch('./component/sidebar.html')
+                .then(response => response.text())
+                .then(data => {
+                    // 获取文本字符串中的每一行
+                    const lines = data.split('\n');
+                    // 修改第三行
+                    lines[16] = "        <li class='current'><a href='/resume.html'>Resume</a></li>\n";
+                    // 将修改后的文本字符串重新加载到myDiv元素中
+                    document.getElementById('sidebar').innerHTML = lines.join('');
+                });
+        </script>
+    </div>
+
+    <!-- MusicPlayer -->
+    <div id="player">
+        <script>
+            const scriptId = 'playMusic';
+            const existingScript = document.getElementById(scriptId);
+
+            if (!existingScript) {
+                // 创建新的script元素
+                const playMusic = document.createElement('script');
+                playMusic.src = "assets/js/playmusic.js";
+                playMusic.id = scriptId;
+
+                // 向sidebar元素中添加新元素
+                fetch('./component/musicPlayer.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        const musicDOM = document.createElement('div');
+                        musicDOM.innerHTML = data;
+                        musicDOM.appendChild(playMusic);
+                        document.getElementById('sidebar').appendChild(musicDOM);
+                        // document.getElementById('sidebar').appendChild(playMusic);
+                    });
+            } else {
+                console.log(`Script with id ${scriptId} already exists.`);
+            }
+        </script>
+    </div>
 
     <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>

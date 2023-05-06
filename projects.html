@@ -240,12 +240,12 @@
 							class="image featured">
 							<img src="projects/Cifar10/head.png" alt="" /></a>
 					</div>
-					<div>The CIFAR-10 dataset contains 10 categories of images, 
-						with a total of 60,000 training images and 10,000 test images. 
-						This project aims to use an autoencoder for unsupervised anomaly detection, 
-						where the positive class is set as images of airplanes and the negative class 
-						is composed of images of cars, birds, cats, deer, dogs, frogs, horses, ships, and trucks. 
-						The anomaly samples are not included in the learning process. 
+					<div>The CIFAR-10 dataset contains 10 categories of images,
+						with a total of 60,000 training images and 10,000 test images.
+						This project aims to use an autoencoder for unsupervised anomaly detection,
+						where the positive class is set as images of airplanes and the negative class
+						is composed of images of cars, birds, cats, deer, dogs, frogs, horses, ships, and trucks.
+						The anomaly samples are not included in the learning process.
 						<br>
 						<span><a href="projects/Cifar10/main.pdf">PDF</a></span>
 					</div>
@@ -259,7 +259,7 @@
 	<!-- Sidebar -->
 	<div id="sidebar">
 		<script>
-			fetch('sidebar.html')
+			fetch('./component/sidebar.html')
 				.then(response => response.text())
 				.then(data => {
 					// 获取文本字符串中的每一行
@@ -269,6 +269,34 @@
 					// 将修改后的文本字符串重新加载到myDiv元素中
 					document.getElementById('sidebar').innerHTML = lines.join('');
 				});
+		</script>
+	</div>
+
+	<!-- MusicPlayer -->
+	<div id="player">
+		<script>
+			const scriptId = 'playMusic';
+			const existingScript = document.getElementById(scriptId);
+
+			if (!existingScript) {
+				// 创建新的script元素
+				const playMusic = document.createElement('script');
+				playMusic.src = "assets/js/playmusic.js";
+				playMusic.id = scriptId;
+
+				// 向sidebar元素中添加新元素
+				fetch('./component/musicPlayer.html')
+					.then(response => response.text())
+					.then(data => {
+						const musicDOM = document.createElement('div');
+						musicDOM.innerHTML = data;
+						musicDOM.appendChild(playMusic);
+						document.getElementById('sidebar').appendChild(musicDOM);
+						// document.getElementById('sidebar').appendChild(playMusic);
+					});
+			} else {
+				console.log(`Script with id ${scriptId} already exists.`);
+			}
 		</script>
 	</div>
 

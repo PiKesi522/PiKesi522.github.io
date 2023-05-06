@@ -59,7 +59,8 @@
 	<!-- Sidebar -->
 	<div id="sidebar">
 		<script>
-			fetch('/sidebar.html')
+			// 向sidebar元素中添加新元素
+			fetch('./component/sidebar.html')
 				.then(response => response.text())
 				.then(data => {
 					document.getElementById('sidebar').innerHTML = data;
@@ -67,75 +68,33 @@
 		</script>
 	</div>
 
-	<style>
-		#musicButton {
-			position: fixed;
-			bottom: 20px;
-			left: 20px;
-			width: 50px;
-			height: 50px;
-			padding: 10px;
-			border-radius: 40px;
-			background-color: rgba(173, 178, 208, 0.3);
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-			opacity: 0.6;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			cursor: pointer;
-			transition: all 0.3s ease;
-			border: none;
-			outline: none;
-			animation: rotate 10s linear infinite;
-			z-index: 1;
-		}
+	<!-- MusicPlayer -->
+	<div id="player">
+		<script>
+			const scriptId = 'playMusic';
+			const existingScript = document.getElementById(scriptId);
 
-		#musicButton.paused {
-			animation-play-state: paused;
-			background-color: rgba(116, 118, 130, 0.3);
-		}
+			if (!existingScript) {
+				// 创建新的script元素
+				const playMusic = document.createElement('script');
+				playMusic.src = "assets/js/playmusic.js";
+				playMusic.id = scriptId;
 
-		#musicButton.pause:active {
-			animation: stop-animat 0.2s linear;
-		}
-
-		@keyframes stop-animat {
-			0% {
-				transform: scale(1);
+				// 向sidebar元素中添加新元素
+				fetch('./component/musicPlayer.html')
+					.then(response => response.text())
+					.then(data => {
+						const musicDOM = document.createElement('div');
+						musicDOM.innerHTML = data;
+						musicDOM.appendChild(playMusic);
+						document.getElementById('sidebar').appendChild(musicDOM);
+						// document.getElementById('sidebar').appendChild(playMusic);
+					});
+			} else {
+				console.log(`Script with id ${scriptId} already exists.`);
 			}
-
-			50% {
-				transform: scale(1.2);
-			}
-
-			100% {
-				transform: scale(1);
-			}
-		}
-
-		@keyframes rotate {
-			0% {
-				transform: rotate(0deg);
-			}
-
-			100% {
-				transform: rotate(360deg);
-			}
-		}
-	</style>
-
-
-	<audio autoplay id="myAudio" src="assets/music/Cloud.m4a" loop></audio>
-	<button id="musicButton">
-		<svg t="1682781246350" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-			p-id="6063" width="128" height="128">
-			<path
-				d="M875.52 433.152q-7.168-1.024-12.8-10.24t-8.704-33.792q-5.12-39.936-26.112-58.88t-65.024-27.136q-46.08-9.216-81.408-37.376t-58.88-52.736q-22.528-21.504-34.816-15.36t-12.288 22.528l0 44.032 0 96.256q0 57.344-0.512 123.904t-0.512 125.952l0 104.448 0 58.368q1.024 24.576-7.68 54.784t-32.768 56.832-64 45.568-99.328 22.016q-60.416 3.072-109.056-21.504t-75.264-61.952-26.112-81.92 38.4-83.456 81.92-54.272 84.992-16.896 73.216 5.632 47.616 13.312l0-289.792q0-120.832 1.024-272.384 0-29.696 15.36-48.64t40.96-22.016q21.504-3.072 35.328 8.704t28.16 32.768 35.328 47.616 56.832 52.224q30.72 23.552 53.76 33.792t43.008 18.944 39.424 20.992 43.008 39.936q23.552 26.624 28.672 55.296t0.512 52.224-14.848 38.4-17.408 13.824z"
-				p-id="6064" fill="#ffffff"></path>
-			<line x1="128" y1="128" x2="896" y2="896" stroke="rgb(116, 118, 130)" stroke-width="100" class="slash" />
-		</svg>
-	</button>
-
+		</script>
+	</div>
 
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>
@@ -143,7 +102,7 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
-	<script src="assets/js/playmusic.js"></script>
+	<!-- <script src="assets/js/playmusic.js"></script>  -->
 
 	<script>
 		const folderUrl = "MainPage/";

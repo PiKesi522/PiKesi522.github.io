@@ -19,17 +19,18 @@ const playMusic = document.getElementById("musicButton");
 const audio = document.getElementById("myAudio");
 const slash = document.querySelector("#musicButton .slash");
 
-audio.volume = 0.3;
+audio.volume = 0.5;
 // slash.style.visibility = "hidden";
 
-playMusic.addEventListener("click", function(){
-    if(audio.paused){
-        playAudio();
-    }
-    else{
-        pauseAudio();
-    }
-})
+playMusic.addEventListener("click", function () {
+  // console.log("click");
+  if (audio.paused) {
+    playAudio();
+  }
+  else {
+    pauseAudio();
+  }
+});
 
 playAudio();
 

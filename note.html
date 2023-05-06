@@ -26,7 +26,7 @@
 	<!-- Sidebar -->
 	<div id="sidebar">
 		<script>
-			fetch('sidebar.html')
+			fetch('./component/sidebar.html')
 				.then(response => response.text())
 				.then(data => {
 					// 获取文本字符串中的每一行
@@ -36,6 +36,34 @@
 					// 将修改后的文本字符串重新加载到myDiv元素中
 					document.getElementById('sidebar').innerHTML = lines.join('');
 				});
+		</script>
+	</div>
+
+	<!-- MusicPlayer -->
+	<div id="player">
+		<script>
+			const scriptId = 'playMusic';
+			const existingScript = document.getElementById(scriptId);
+
+			if (!existingScript) {
+				// 创建新的script元素
+				const playMusic = document.createElement('script');
+				playMusic.src = "assets/js/playmusic.js";
+				playMusic.id = scriptId;
+
+				// 向sidebar元素中添加新元素
+				fetch('./component/musicPlayer.html')
+					.then(response => response.text())
+					.then(data => {
+						const musicDOM = document.createElement('div');
+						musicDOM.innerHTML = data;
+						musicDOM.appendChild(playMusic);
+						document.getElementById('sidebar').appendChild(musicDOM);
+						// document.getElementById('sidebar').appendChild(playMusic);
+					});
+			} else {
+				console.log(`Script with id ${scriptId} already exists.`);
+			}
 		</script>
 	</div>
 
@@ -113,7 +141,7 @@
 					// "padding":"0px 4em 2em 4em",
 					// "border-radius":"5px"
 				});
-				const headerElement = $("<header></header>").css("padding","0");
+				const headerElement = $("<header></header>").css("padding", "0");
 				// const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", `notes/${article.filename}/main.html?`).text(article.name));
 				const h2Element = $("<h2></h2>").append($("<a></a>").attr("href", "/notes/main.html?" + encodeURLParams(article)).text(article.name));
 				const pElement = $("<p></p>").text(article.title);
@@ -122,13 +150,13 @@
 				// const featuredImageElement = $("<a></a>").attr("href", `notes/${article.filename}/main.html?`).addClass("image featured").append($("<img/>").attr("src", `notes/${article.filename}/head.jpg`).attr("alt", ""));
 				const featuredImageElement = $("<a></a>").attr("href", "/notes/main.html?" + encodeURLParams(article)).addClass("image featured").append($("<img/>").attr("src", `notes/${article.filename}/head.jpg`).attr("alt", ""));
 				const photoInfo = article.photo.split("-");
-				var photoElement;  
-				if (article.photo === "图源网络") { 
-					photoElement = $('<div></div>').css({ 
-						'text-align': 'center', 
+				var photoElement;
+				if (article.photo === "图源网络") {
+					photoElement = $('<div></div>').css({
+						'text-align': 'center',
 						'margin': '0 0 1.5em 0'
-					}).html("图源网络"); 
-				} 
+					}).html("图源网络");
+				}
 				else {
 					photoElement = $('<div></div>').css({
 						'text-align': 'center',
