@@ -14,13 +14,14 @@ playMusic.addEventListener("click", function () {
 });
 
 // 从localStorage中获取上一次播放的位置
-const storedPosition = localStorage.getItem('musicPosition');
+
+const storedPosition = sessionStorage.getItem('musicPosition');
 if (storedPosition) {
   audio.currentTime = parseInt(storedPosition);
 }
 
 // 检查localStorage中是否保存了播放状态
-if (localStorage.getItem('musicPlaying') === 'true') {
+if (sessionStorage.getItem('musicPlaying') === 'true') {
   playAudio();
 }
 else {
@@ -33,7 +34,7 @@ function playAudio() {
   slash.style.visibility = "hidden";
 
   // 将播放状态保存到localStorage
-  localStorage.setItem('musicPlaying', 'true');
+  sessionStorage.setItem('musicPlaying', 'true');
 }
 
 function pauseAudio() {
@@ -42,10 +43,10 @@ function pauseAudio() {
   slash.style.visibility = "visible";
 
   // 将播放状态从localStorage中移除
-  localStorage.removeItem('musicPlaying');
+  sessionStorage.removeItem('musicPlaying');
 }
 
 // 在页面卸载时保存播放位置到localStorage
 window.addEventListener('beforeunload', function() {
-  localStorage.setItem('musicPosition', audio.currentTime);
+  sessionStorage.setItem('musicPosition', audio.currentTime);
 });
