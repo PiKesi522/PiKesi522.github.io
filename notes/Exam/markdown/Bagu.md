@@ -26,6 +26,8 @@ console.log(name);		// 没有定义
 
 - const，和let相同，但是const将固定引用的内存地址，所以不能修改本身指向的变量，但是可以修改对象内容
 
+### 暂时性死区
+
 ### 声明提升
 
 如果出现以下类似代码
@@ -83,6 +85,8 @@ console.log(i) // undefined
 
 由于Promise是处理异步函数使用的，而try catch是同步方法，所以catch无法获取到Promise中出错的reject情况
 
+### 手写Promise.all 
+
 -----
 
 ### Cookie
@@ -91,7 +95,7 @@ Cookie本身是一小段文本文件，保存在本地，当用户Cookie过期�
 
 不论用户和浏览器需不需要，cookies始终会携带在http头部，所以一般cookie大小只限制在4k左右
 
-### WebStorage
+### Session
 
 WebStorage 相较于 Cookie 可以保存更多的数据，但是都保存在本地会话中，一般大小为5M左右，包括LocalStorage和SessionStorage两部分
 
@@ -102,6 +106,12 @@ WebStorage 相较于 Cookie 可以保存更多的数据，但是都保存在本�
 #### SessionStorage
 
 
+
+#### Token
+
+
+
+### XSS和CSRF
 
 -----
 
@@ -241,6 +251,7 @@ h1 {
 ### JS的Typeof能返回的值
 
 - undefined：未定义、未赋值的变量，当使用let和var进行初始化的但没有赋值就相当于赋值了undefined
+- null
 - boolean
 - string：字符串本质上是不可变的，所有的字符串操作都是开辟了新的变量空间
 - number
@@ -258,6 +269,8 @@ h1 {
 ------
 
 ### JS的防抖和节流
+
+闭包
 
 - 防抖：防止用户手抽搐，疯狂操作，所以设置一个timeout，只监听最后一次操作【resize，search】。
 - 节流：节省多余的开销，只监听第一次的操作，设置一个timeout，在结束前不会在有回应【submit，mousedown】。
@@ -279,7 +292,7 @@ h1 {
 
 -----
 
-### JS的this
+### JS的this 
 
 ------
 
@@ -293,7 +306,7 @@ h1 {
 
 -----
 
-### JS的事件循环
+### JS的事件循环，React合成事件，JS原生事件
 
 由于JS是单线程的，所以在处理异步函数的时候，需要通过任务调度来使得其加快处理效率，其中分为三个部分：同步任务，宏任务，微任务
 
@@ -424,6 +437,8 @@ console.log(a());
 - import是基于ES6规范，在浏览器下都支持的。在预编译的时候就需要加载，所以必须写在文档最上方。
   1. 通过import引用的是一个**引用对象**，是不能修改的常量
 
+### CommonJS加载
+
 -----
 
 ### http状态码
@@ -476,6 +491,8 @@ console.log(a());
 
 该种方式主要用来提交XML格式的数据。
 
+### get，post区别
+
 -----
 
 ### https中SSL实现
@@ -484,6 +501,14 @@ console.log(a());
 2. Server 回应，并添加数字证书（包含公钥）
 3. Client通过CA确认数字证书，用公钥加密对此密钥
 4. Server确认对称密钥
+
+
+
+### 强缓存和协商缓存
+
+
+
+### 浏览器进程，JS线程
 
 -----
 
@@ -667,6 +692,10 @@ oDiv.addEventListener('click',function(){
 
 ### react 生命周期函数
 
+
+
+### React虚拟DOM
+
 -----
 
 ### react diff算法
@@ -681,7 +710,11 @@ oDiv.addEventListener('click',function(){
 
 -----
 
-### react 组件间传递数据
+### React 组件间传递数据，单向数据流
+
+
+
+### React Fiber
 
 -------
 
