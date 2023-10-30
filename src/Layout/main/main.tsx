@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
+import './title.css';
+
 const BlogDom = (props: { title: string }): JSX.Element => {
   const { title } = { ...props } || "";
   return (
@@ -38,11 +40,9 @@ const BlogContent = (): JSX.Element => {
 
 const Title = (): JSX.Element => {
   return (
-    <>
-      <div className='title'>
-        This is my Blog
-      </div>
-    </>
+    <div className='title'>
+      This is my Blog
+    </div>
   );
 }
 
