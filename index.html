@@ -11,7 +11,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/css/main.css" />
-	<link rel="icon" href="/favicon.ico">
+	<link rel="icon" href="/assets/images/favicon.ico">
 </head>
 
 <body class="is-preload">
@@ -59,7 +59,7 @@
 	<div id="sidebar">
 		<script>
 			// 向sidebar元素中添加新元素
-			fetch('./component/sidebar.html')
+			fetch('/component/sidebar/sidebar.html')
 				.then(response => response.text())
 				.then(data => {
 					document.getElementById('sidebar').innerHTML = data;
@@ -69,12 +69,12 @@
 
 	<!-- MusicPlayer -->
 	<div id="player">
-		<script src="./component/loadMusicPlayer.js"></script>
+		<script src="/component/musicPlayer/loadMusicPlayer.js"></script>
 	</div>
 
-	<script>
+	<!-- <script>
 		alert("博客页面正在升级中，即日起此博客内容停止更新，直到版本更新完成")
-	</script>
+	</script> -->
 
 	<!-- Scripts -->
 	<script src="assets/js/jquery.min.js"></script>

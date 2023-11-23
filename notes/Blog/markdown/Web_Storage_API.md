@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (sidebar) {
     document.getElementById('sidebar').innerHTML = sidebar;
   } else {
-    fetch('/sidebar.html')
+    fetch('/sidebar/sidebar.html')
       .then(response => response.text())
       .then(data => {
         localStorage.setItem('sidebar', data);

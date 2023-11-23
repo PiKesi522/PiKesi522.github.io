@@ -10,7 +10,7 @@
 	<title>PiKesi's Home on the Internet</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="/assets/css/main.css" />
 	<link rel="stylesheet" href="/board/css/board.css" />
 	<link rel="stylesheet" href="/board/css/popup.css" />
 	<link rel="icon" href="/assets/images/head1.png">
@@ -319,13 +319,13 @@
 	<!-- Sidebar -->
 	<div id="sidebar">
 		<script>
-			fetch('./component/sidebar.html')
+			fetch('/component/sidebar/sidebar.html')
 				.then(response => response.text())
 				.then(data => {
 					// 获取文本字符串中的每一行
 					const lines = data.split('\n');
 					// 修改第三行
-					lines[17] = "        <li class='current'><a href='/board.html'>BBS(测试版)</a></li>\n";
+					lines[17] = "        <li class='current'><a href='/pages/board.html'>BBS(测试版)</a></li>\n";
 					// 将修改后的文本字符串重新加载到myDiv元素中
 					document.getElementById('sidebar').innerHTML = lines.join('');
 				});
@@ -335,7 +335,7 @@
 
 	<!-- MusicPlayer -->
 	<div id="player">
-		<script src="./component/loadMusicPlayer.js"></script>
+		<script src="/component/musicPlayer/loadMusicPlayer.js"></script>
 	</div>
 	
 	<!-- Scripts -->
